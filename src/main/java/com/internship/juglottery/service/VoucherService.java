@@ -5,6 +5,7 @@ import com.internship.juglottery.entity.Voucher;
 import java.util.List;
 
 public interface VoucherService {
+
     List<Voucher> getVouchersByLotteryId(Long lotteryId);
 
     Voucher createVoucher(Voucher voucher);

@@ -11,7 +11,6 @@ public interface LotteryService {
     void changeLotteryStatusToActive(Long lotteryId);
 
     void changeLotteryStatusToFinished(Long lotteryId);
-    void setCurrentDateWhenEventIsFinished(Long lotteryId);
 
     List<Winner> pickWinners(Long lotteryId);
 

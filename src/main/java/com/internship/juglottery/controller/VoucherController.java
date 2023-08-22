@@ -23,6 +23,7 @@ import java.security.Principal;
 @RequestMapping("/voucher")
 @RequiredArgsConstructor
 public class VoucherController {
+
     private final VoucherService voucherService;
     private final VoucherMapper voucherMapper;
     private final AppUserService appUserService;
@@ -32,7 +33,6 @@ public class VoucherController {
         model.addAttribute("voucher", new VoucherRequest());
         return "new_voucher";
     }
-
 
     @PostMapping("/new_voucher")
     public String createVoucher(@ModelAttribute("voucher") @Valid VoucherRequest voucherRequest,

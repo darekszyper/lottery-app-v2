@@ -73,13 +73,11 @@ public class LotteryController {
         return "manage_lottery";
     }
 
-
     @GetMapping("/new_voucher")
     public String getNewVoucherPage(Model model) {
         model.addAttribute("voucher", new VoucherRequest());
         return "new_voucher";
     }
-
 
     @GetMapping("/qr_code")
     public String startLottery(@RequestParam("eventId") Long eventId, Model model) {

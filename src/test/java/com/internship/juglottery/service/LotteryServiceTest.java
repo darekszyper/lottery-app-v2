@@ -6,7 +6,6 @@ import com.internship.juglottery.event.VouchersSentEvent;
 import com.internship.juglottery.exception.LotteryIsFinishedException;
 import com.internship.juglottery.repository.LotteryRepo;
 import com.internship.juglottery.repository.WinnerRepo;
-import com.internship.juglottery.service.impl.EmailSenderService;
 import com.internship.juglottery.service.impl.LotteryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,37 +27,22 @@ class LotteryServiceTest {
 
     @Mock
     private ParticipantService participantService;
-
-    @Mock
-    private AnonymizationService anonymizationService;
-
     @Mock
     private VoucherService voucherService;
-
     @Mock
     private RandomizeService randomizeService;
-
     @Mock
     private LotteryRepo lotteryRepo;
-
     @Mock
     private WinnerRepo winnerRepo;
-
     @Mock
     private Lottery lottery;
-
     @Mock
     private Voucher voucher;
-
-    @Mock
-    private EmailSenderService emailSenderService;
-
     @Mock
     private AppUser appUser;
-
     @Mock
     ApplicationEventPublisher eventPublisher;
-
     @InjectMocks
     private LotteryServiceImpl lotteryServiceImpl;
 
@@ -82,21 +66,7 @@ class LotteryServiceTest {
     }
 
     @Test
-    @DisplayName("Should set current date")
-    void shouldSetCurrentDate() {
-        //given
-        Long lotteryId = 1L;
-        doNothing().when(lotteryRepo).setEventDate(lotteryId);
-
-        //when
-        lotteryServiceImpl.setCurrentDateWhenEventIsFinished(lotteryId);
-
-        //then
-        verify(lotteryRepo, times(1)).setEventDate(lotteryId);
-    }
-
-    @Test
-    @DisplayName("Should change status of lottery to finished")
+    @DisplayName("Should change status of lottery to finished and set current date")
     void shouldChangeStatusToFinished() {
         //given
         Long lotteryId = 1L;
@@ -107,6 +77,7 @@ class LotteryServiceTest {
 
         //then
         verify(lotteryRepo, times(1)).changeStatusToFinished(lotteryId);
+        verify(lotteryRepo, times(1)).setEventDate(lotteryId);
     }
 
     @Test

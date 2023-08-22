@@ -8,11 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface VoucherRepo extends JpaRepository<Voucher, Long> {
-    List<Voucher> findAllByLotteryId(Long id);
+
+    List<Voucher> findAllByLotteryId(Long lotteryId);
 
     @Modifying
     @Query(value = "UPDATE voucher Set lottery_id = NULL where lottery_id = :id", nativeQuery = true)
-    void removeVoucherId(Long id);
+    void removeVoucherByLotteryId(Long lotteryId);
 
     List<Voucher> findAllByAppUserIdAndLotteryId(Long userId, Long lotteryId);
 }

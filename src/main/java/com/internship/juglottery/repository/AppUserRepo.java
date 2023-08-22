@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AppUserRepo extends JpaRepository<AppUser, Long> {
+
     Optional<AppUser> findByEmail(String email);
 
     List<AppUser> findAllByRole(Role role);

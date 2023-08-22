@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Mapper(componentModel = "spring")
 public abstract class AppUserMapper {
 
-    private final Role userRole = Role.USER;
+    private final Role USER_ROLE = Role.USER;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -30,6 +30,6 @@ public abstract class AppUserMapper {
     protected void setUserRoleAndEncodePassword(@MappingTarget AppUser appUser) {
         String generatedPassword = passwordServiceImpl.generatePassword();
         appUser.setPassword(passwordEncoder.encode(generatedPassword));
-        appUser.setRole(userRole);
+        appUser.setRole(USER_ROLE);
     }
 }

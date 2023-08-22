@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VoucherRequest {
+
     @NotBlank(message = "Voucher name required")
     @Size(max = 50, message = "Voucher name must be shorter than 50 letters")
     private String voucherName;
