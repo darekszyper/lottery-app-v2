@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Winners</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div id="column_400">
+    <div id="form_style">
+        <button id="go_back" onclick="window.location.href='/lottery'">Back</button>
+        <h2>Winners:</h2>
+        <div id="winners">
+            <tbody th:each="winner: ${winners}">
+            <p th:text="${winner}"></p>
+            </tbody>
+        </div>
+    </div>
+</div>
+</body>
+</html>

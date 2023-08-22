@@ -1,0 +1,146 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="2" author="Dariusz Szyperek">
+
+        <insert tableName="app_user">
+            <column name="email" value="admin@wp.pl"/>
+            <column name="name" value="Super User"/>
+            <column name="password" value="$2y$10$62UlZIGR.MkT.vjSXags9uMyH5.1MS22mhh4BIjGl3cO4MKmPy/qa"/>
+            <column name="role" value="SUPER_USER"/>
+        </insert>
+        <insert tableName="app_user">
+            <column name="email" value="user1@wp.pl"/>
+            <column name="name" value="User1 User1"/>
+            <column name="password" value="$2y$10$n5E0RDQb9K3GXNl9krXDMu5qI8.jp6FWyNC6/WfGOViKYEbo1dOpq"/>
+            <column name="role" value="USER"/>
+        </insert>
+        <insert tableName="app_user">
+            <column name="email" value="user2@wp.pl"/>
+            <column name="name" value="User2 User2"/>
+            <column name="password" value="$2y$10$QXRbiANN3kQMk2t7g2BxMONp34HnXjHpaZveuAAeA6fD2/KYWgXYi"/>
+            <column name="role" value="USER"/>
+        </insert>
+
+        <insert tableName="lottery">
+            <column name="event_name" value="JUG1user2"/>
+            <column name="status" value="NOT_ACTIVE"/>
+            <column name="city" value="Warszawa"/>
+            <column name="app_user_id" value="2"/>
+        </insert>
+        <insert tableName="lottery">
+            <column name="event_name" value="JUG2user2"/>
+            <column name="status" value="NOT_ACTIVE"/>
+            <column name="city" value="Bialystok"/>
+            <column name="app_user_id" value="2"/>
+        </insert>
+        <insert tableName="lottery">
+            <column name="event_name" value="JUG3user3"/>
+            <column name="status" value="NOT_ACTIVE"/>
+            <column name="city" value="Bialystok"/>
+            <column name="app_user_id" value="3"/>
+        </insert>
+        <insert tableName="lottery">
+            <column name="event_name" value="JUG4user3"/>
+            <column name="status" value="NOT_ACTIVE"/>
+            <column name="city" value="Bialystok"/>
+            <column name="app_user_id" value="3"/>
+        </insert>
+
+        <insert tableName="voucher">
+            <column name="voucher_name" value="name1user2"/>
+            <column name="activation_code" value="ABC123XYZ"/>
+            <column name="expiration_date" value="2023-08-15"/>
+            <column name="lottery_id" value="1"/>
+            <column name="app_user_id" value="2"/>
+        </insert>
+        <insert tableName="voucher">
+            <column name="voucher_name" value="name2user2"/>
+            <column name="activation_code" value="XYZ987ABC"/>
+            <column name="expiration_date" value="2023-09-30"/>
+            <column name="lottery_id" value="1"/>
+            <column name="app_user_id" value="2"/>
+        </insert>
+        <insert tableName="voucher">
+            <column name="voucher_name" value="name3user2"/>
+            <column name="activation_code" value="XYZ987ABC"/>
+            <column name="expiration_date" value="2023-09-30"/>
+            <column name="lottery_id" value="2"/>
+            <column name="app_user_id" value="2"/>
+        </insert>
+        <insert tableName="voucher">
+            <column name="voucher_name" value="name4user3"/>
+            <column name="activation_code" value="XYZ987ABC"/>
+            <column name="expiration_date" value="2023-09-30"/>
+            <column name="lottery_id" value="3"/>
+            <column name="app_user_id" value="3"/>
+        </insert>
+        <insert tableName="voucher">
+            <column name="voucher_name" value="name5user2"/>
+            <column name="activation_code" value="ABC123XYZ"/>
+            <column name="expiration_date" value="2023-08-15"/>
+            <column name="app_user_id" value="2"/>
+        </insert>
+        <insert tableName="voucher">
+            <column name="voucher_name" value="name6user2"/>
+            <column name="activation_code" value="ABC123XYZ"/>
+            <column name="expiration_date" value="2023-08-15"/>
+            <column name="app_user_id" value="2"/>
+        </insert>
+        <insert tableName="voucher">
+            <column name="voucher_name" value="name7user3"/>
+            <column name="activation_code" value="XYZ987ABC"/>
+            <column name="expiration_date" value="2023-09-30"/>
+            <column name="app_user_id" value="3"/>
+        </insert>
+        <insert tableName="voucher">
+            <column name="voucher_name" value="name8user3"/>
+            <column name="activation_code" value="XYZ987ABC"/>
+            <column name="expiration_date" value="2023-09-30"/>
+            <column name="app_user_id" value="3"/>
+        </insert>
+
+        <insert tableName="participant">
+            <column name="first_name" value="John"/>
+            <column name="email" value="dszyperek7@gmail.com"/>
+            <column name="lottery_id" value="1"/>
+        </insert>
+        <insert tableName="participant">
+            <column name="first_name" value="Alice"/>
+            <column name="email" value="dszyperek7@gmail.com"/>
+            <column name="lottery_id" value="1"/>
+        </insert>
+        <insert tableName="participant">
+            <column name="first_name" value="Bob"/>
+            <column name="email" value="dszyperek7@gmail.com"/>
+            <column name="lottery_id" value="1"/>
+        </insert>
+        <insert tableName="participant">
+            <column name="first_name" value="Fred"/>
+            <column name="email" value="dszyperek7@gmail.com"/>
+            <column name="lottery_id" value="1"/>
+        </insert>
+        <insert tableName="participant">
+            <column name="first_name" value="George"/>
+            <column name="email" value="dszyperek7@gmail.com"/>
+            <column name="lottery_id" value="1"/>
+        </insert>
+        <insert tableName="participant">
+            <column name="first_name" value="Darek"/>
+            <column name="email" value="dszyperek7@gmail.com"/>
+            <column name="lottery_id" value="2"/>
+        </insert>
+        <insert tableName="participant">
+            <column name="first_name" value="Kamil"/>
+            <column name="email" value="dszyperek7@gmail.com"/>
+            <column name="lottery_id" value="2"/>
+        </insert>
+        <insert tableName="participant">
+            <column name="first_name" value="Marek"/>
+            <column name="email" value="dszyperek7@gmail.com"/>
+            <column name="lottery_id" value="2"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

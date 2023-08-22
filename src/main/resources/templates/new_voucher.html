@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>New Voucher</title>
+
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div id="column_400">
+
+    <button id="go_back" onclick="window.location.href='/lottery'">Back</button>
+
+    <form id="form_style" th:action="@{/voucher/new_voucher}" th:object="${voucher}" method="post">
+        <p th:if="${param.success}" style="color:green;">Voucher added successfully</p>
+
+        <label for="voucher_name">Voucher name:</label>
+        <input type="text" id="voucher_name" th:field="*{voucherName}" name="voucher_name" required><br><br>
+        <p th:if="${#fields.hasErrors('voucherName')}">Name too long</p>
+
+        <label for="activation_code">Activation code:</label>
+        <input type="text" id="activation_code" th:field="*{activationCode}" name="activation_code" required><br><br>
+        <p th:if="${#fields.hasErrors('activationCode')}">Invalid activation code</p>
+
+        <label for="expiration_date">Expiration date:</label>
+        <input type="date" id="expiration_date" th:field="*{expirationDate}" name="expiration_date" required><br><br>
+        <p th:if="${#fields.hasErrors('expirationDate')}">Expiration Date must be in the future</p>
+
+        <input type="submit" value="Create voucher">
+    </form>
+</div>
+
+
+</body>
+</html>

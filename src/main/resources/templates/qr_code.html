@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QR Code</title>
+
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div id="column_400">
+    <div id="form_style">
+        <div id="qr-code-frame">
+            <div id="qr-code-text">Scan the QR code</div>
+            <img id="qr-code-image"
+                 th:src="@{${'http://localhost:8080/qr_code/image/' + eventId}}"
+                 alt="QR Code">
+        </div>
+        <div id="participants">
+            Number of lottery participants:
+        </div>
+        <div id="timer">
+            <p>Remaining time to scan:</p>
+            <p id="remaining-time"></p>
+        </div>
+    </div>
+    <div class="button">
+        <a th:href='@{${"/lottery/winners/" + eventId}}'>Finish lottery and show winners</a>
+    </div>
+</div>
+<script th:inline="javascript">
+        var remainingTime = 10;
+        var countDownDate = new Date();
+        countDownDate.setMinutes(countDownDate.getMinutes() + remainingTime);
+
+        var timer = setInterval(function(){
+
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("remaining-time").innerHTML = minutes + "m " + seconds + "s ";
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("form_style").innerHTML = '<p>Lottery has ended</p>';
+            }
+
+        },1000);
+</script>
+</body>
+</html>
