@@ -43,7 +43,7 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Override
     public void removeVoucherId(Long lotteryId) {
-        voucherRepo.removeVoucherId(lotteryId);
+        voucherRepo.removeVoucherByLotteryId(lotteryId);
     }
 
     @Override

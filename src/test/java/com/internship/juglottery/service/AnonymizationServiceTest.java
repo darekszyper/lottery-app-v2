@@ -23,6 +23,7 @@ class AnonymizationServiceTest {
 
     @Mock
     ParticipantRepo participantRepo;
+
     @InjectMocks
     private AnonymizationServiceImpl anonymizationServiceImpl;
 

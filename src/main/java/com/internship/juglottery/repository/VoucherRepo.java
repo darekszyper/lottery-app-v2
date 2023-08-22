@@ -12,7 +12,7 @@ public interface VoucherRepo extends JpaRepository<Voucher, Long> {
     List<Voucher> findAllByLotteryId(Long lotteryId);
 
     @Modifying
-    @Query(value = "UPDATE voucher Set lottery_id = NULL where lottery_id = :id", nativeQuery = true)
+    @Query(value = "UPDATE voucher Set lottery_id = NULL where lottery_id = :lotteryId", nativeQuery = true)
     void removeVoucherByLotteryId(Long lotteryId);
 
     List<Voucher> findAllByAppUserIdAndLotteryId(Long userId, Long lotteryId);

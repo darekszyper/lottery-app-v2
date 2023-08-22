@@ -22,7 +22,6 @@ class VoucherServiceTest {
 
     @Mock
     VoucherRepo voucherRepo;
-
     @Mock
     Voucher voucher;
 
@@ -108,7 +107,7 @@ class VoucherServiceTest {
         voucherServiceImpl.removeVoucherId(lotteryId);
 
         //then
-        verify(voucherRepo, times(1)).removeVoucherId(lotteryId);
+        verify(voucherRepo, times(1)).removeVoucherByLotteryId(lotteryId);
     }
 
     @Test

@@ -43,6 +43,7 @@ class LotteryServiceTest {
     private AppUser appUser;
     @Mock
     ApplicationEventPublisher eventPublisher;
+
     @InjectMocks
     private LotteryServiceImpl lotteryServiceImpl;
 

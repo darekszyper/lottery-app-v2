@@ -25,13 +25,10 @@ import static org.mockito.Mockito.*;
 class AppUserServiceTest {
     @Mock
     AppUser appUser;
-
     @Mock
     AppUserRepo appUserRepo;
-
     @Mock
     PasswordResetToken passwordResetToken;
-
     @Mock
     PasswordTokenRepo passwordTokenRepo;
 
@@ -221,5 +218,4 @@ class AppUserServiceTest {
         //then
         assertEquals(1L, id);
     }
-
 }
