@@ -28,13 +28,13 @@ public class VoucherController {
     private final VoucherMapper voucherMapper;
     private final AppUserService appUserService;
 
-    @GetMapping("/new_voucher")
+    @GetMapping("/create")
     public String getNewVoucherPage(Model model) {
         model.addAttribute("voucher", new VoucherRequest());
         return "new_voucher";
     }
 
-    @PostMapping("/new_voucher")
+    @PostMapping("/create")
     public String createVoucher(@ModelAttribute("voucher") @Valid VoucherRequest voucherRequest,
                                 BindingResult bindingResult,
                                 Principal principal) {
@@ -47,6 +47,6 @@ public class VoucherController {
         voucherRequest.setUserId(userId);
         Voucher voucherEntity = voucherMapper.mapToEntity(voucherRequest);
         voucherService.createVoucher(voucherEntity);
-        return "redirect:/lottery/new_voucher?success";
+        return "redirect:/voucher/create?success";
     }
 }

@@ -23,6 +23,12 @@
             <column name="password" value="$2y$10$QXRbiANN3kQMk2t7g2BxMONp34HnXjHpaZveuAAeA6fD2/KYWgXYi"/>
             <column name="role" value="USER"/>
         </insert>
+        <insert tableName="app_user">
+            <column name="email" value="user2333333333333333333333333333333@wp.pl"/>
+            <column name="name" value="User2 User2"/>
+            <column name="password" value="$2y$10$QXRbiANN3kQMk2t7g2BxMONp34HnXjHpaZveuAAeA6fD2/KYWgXYi"/>
+            <column name="role" value="USER"/>
+        </insert>
 
         <insert tableName="lottery">
             <column name="event_name" value="JUG1user2"/>

@@ -9,19 +9,18 @@
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body>
+<h2 class="lottery-heading">
+    Scan the QR code
+</h2>
 <div id="column_400">
     <div id="form_style">
         <div id="qr-code-frame">
-            <div id="qr-code-text">Scan the QR code</div>
             <img id="qr-code-image"
                  th:src="@{${'http://localhost:8080/qr_code/image/' + eventId}}"
                  alt="QR Code">
         </div>
-        <div id="participants">
-            Number of lottery participants:
-        </div>
         <div id="timer">
-            <p>Remaining time to scan:</p>
+            <p>Remaining time to register:</p>
             <p id="remaining-time"></p>
         </div>
     </div>
