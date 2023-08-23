@@ -4,71 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Success</title>
+    <title>Account management</title>
 
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body>
-<div id="column_400">
-    <h1>Account management</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Email</th>
-            <th>Name</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody th:each="user: ${users}">
-        <tr>
-            <td th:text="${user.id}"></td>
-            <td th:text="${user.email}"></td>
-            <td th:text="${user.name}"></td>
-            <td>
-                <button th:onclick="'showDeleteConfirmation(\'' + ${user.id} + '\')'">Delete</button>
-                <!--                <button th:onclick="'editUser(\'' + ${user.id} + '\')'">Edit</button> TODO:implement editing user-->
-            </td>
-        </tr>
-
-        <div th:id="'deleteConfirmationModal' + ${user.id}" class="modal">
-            <div class="modal-content">
-                <p th:text="'Are you sure you want to delete user with id: ' + ${user.id} + '?'"></p>
-                <form th:action="@{/account_management/delete/{id}(id=${user.id})}" method="post">
-                    <button type="submit">Yes, delete</button>
-                </form>
-                <button th:onclick="'closeDeleteConfirmation(\'' + ${user.id} + '\')'">Cancel</button>
-            </div>
+<h2 class="lottery-heading">
+    Account management
+</h2>
+<div id="column_400" style="width: 600px">
+    <div id="form_style_ap">
+        <table>
+            <thead>
+            <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody th:each="user: ${users}">
+            <tr>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.name}"></td>
+                <td>
+                    <button th:onclick="'showDeleteConfirmation(\'' + ${user.id} + '\')'" id="delete">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="button">
+            <a href="/account_management/create">Create new account</a>
         </div>
-        </tbody>
-    </table>
-    <div class="button">
-        <a href="/account_management/create">Create new account</a>
-    </div>
-    <div class="greyButton">
-        <a href="/logout">Logout</a>
+        <div class="greyButton">
+            <a href="/logout">Logout</a>
+        </div>
     </div>
 </div>
 
-
-
+<div th:each="user: ${users}">
+    <div th:id="'deleteConfirmationModal' + ${user.id}" class="modal">
+        <div class="modal-content">
+            <p th:text="'Are you sure you want to delete user with email: ' + ${user.email} + '?'"></p>
+            <form th:action="@{/account_management/delete/{id}(id=${user.id})}" method="post">
+                <button class="submit-button" type="submit">Yes, delete</button>
+                <button class="cancel-button" type="button"
+                        th:onclick="'closeDeleteConfirmation(\'' + ${user.id} + '\')'">
+                    Cancel
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 <script th:inline="javascript">
-        function showDeleteConfirmation(userId) {
-            var modalId = 'deleteConfirmationModal' + userId;
-            document.getElementById(modalId).style.display = 'block';
-        }
+    function showDeleteConfirmation(userId) {
+        var modalId = 'deleteConfirmationModal' + userId;
+        document.getElementById(modalId).style.display = 'block';
+    }
 
-        function closeDeleteConfirmation(userId) {
-            var modalId = 'deleteConfirmationModal' + userId;
-            document.getElementById(modalId).style.display = 'none';
-            window.deleteUserId = null;
-        }
-
-        function editUser(userId) {
-            // Implement the logic to edit the user with the given userId
-            // You can redirect the user to an edit page or show a modal for editing
-        }
-
+    function closeDeleteConfirmation(userId) {
+        var modalId = 'deleteConfirmationModal' + userId;
+        document.getElementById(modalId).style.display = 'none';
+        window.deleteUserId = null;
+    }
 </script>
 </body>
 </html>

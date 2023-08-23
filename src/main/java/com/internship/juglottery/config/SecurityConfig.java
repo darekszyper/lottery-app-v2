@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers(mvcMatcherBuilder.pattern("/reset_password")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/change_password")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/css/**")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/img/**")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll() //only for h2, remove later
                         .anyRequest().hasRole(USER.name())
                 )

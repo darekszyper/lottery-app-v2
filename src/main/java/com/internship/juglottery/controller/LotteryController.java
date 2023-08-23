@@ -42,7 +42,7 @@ public class LotteryController {
     private final AppUserService appUserService;
 
     @GetMapping
-    public String getMainSuperUserPage(Model model, Principal principal) {
+    public String showUserMainPage(Model model, Principal principal) {
         Long userId = appUserService.getUserIdByEmail(principal.getName());
         List<LotteryResponse> lotteryResponses = lotteryService.getAllLotteriesAssignedToUser(userId).stream()
                 .map(lotteryMapper::mapToResponse)
@@ -71,12 +71,6 @@ public class LotteryController {
 
         model.addAttribute("lotteries", lotteryResponses);
         return "manage_lottery";
-    }
-
-    @GetMapping("/new_voucher")
-    public String getNewVoucherPage(Model model) {
-        model.addAttribute("voucher", new VoucherRequest());
-        return "new_voucher";
     }
 
     @GetMapping("/qr_code")

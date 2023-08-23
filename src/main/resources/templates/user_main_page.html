@@ -9,10 +9,11 @@
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body>
+<h2 class="lottery-heading">
+    Lottery management
+</h2>
 <div id="column_400">
     <div id="form_style_ap">
-        <p>Lottery management</p>
-
         <form action="/lottery/qr_code" method="GET">
             <select name="eventId">
                 <tbody th:each="lottery: ${lotteries}">
@@ -27,7 +28,7 @@
         </div>
 
         <div class="button">
-            <a href="/lottery/new_voucher">Create new voucher</a>
+            <a href="/voucher/create">Create new voucher</a>
         </div>
         <div class="button">
             <a href="/lottery/manage">Edit lottery</a>
