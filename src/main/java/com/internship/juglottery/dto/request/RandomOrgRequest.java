@@ -1,5 +1,6 @@
 package com.internship.juglottery.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
@@ -19,13 +20,18 @@ public class RandomOrgRequest {
                 "\n}\n";
     }
 
+    public void setParams(String apiKey, int amountOfNumbers, int range) {
+        this.params = new RandomOrgParams(apiKey, amountOfNumbers, range);
+    }
+
     @Data
-    public static class RandomOrgParams {
+    @AllArgsConstructor
+    private static class RandomOrgParams {
         private String apiKey;
         private int n;
-        private int min;
+        private final int min = 0;
         private int max;
-        private boolean replacement;
+        private final boolean replacement = false;
 
         @Override
         public String toString() {
