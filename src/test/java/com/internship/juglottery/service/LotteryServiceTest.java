@@ -129,7 +129,7 @@ class LotteryServiceTest {
         when(participantService.getParticipantsByLotteryId(lotteryId)).thenReturn(participants);
         when(voucherService.getVouchersByLotteryId(lotteryId)).thenReturn(vouchers);
         when(lotteryRepo.findById(lotteryId)).thenReturn(Optional.of(lottery));
-        when(randomizeService.randomize(participants.size())).thenReturn(0, 1);
+        when(randomizeService.randomize(participants.size() - 1, vouchers.size())).thenReturn(List.of(0, 1));
         when(winnerRepo.saveAll(any())).thenReturn(winners1);
 
         //when

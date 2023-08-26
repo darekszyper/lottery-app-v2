@@ -109,10 +109,12 @@ public class LotteryServiceImpl implements LotteryService {
 
     private void assignWinners(List<Participant> participants, List<Voucher> vouchers,
                                List<Winner> winners, Lottery lottery) {
-        for (Voucher voucher : vouchers) {
-            int winnerIndex = randomizeService.randomize(participants.size());
-            winners.add(new Winner(participants.get(winnerIndex), voucher, lottery));
-            participants.remove(winnerIndex);
+
+        List<Integer> winnersIndexes = randomizeService.randomize(participants.size() - 1, vouchers.size());
+
+        for (int i : winnersIndexes) {
+            winners.add(new Winner(participants.get(winnersIndexes.get(i)), vouchers.get(0), lottery));
+            vouchers.remove(0);
         }
     }
 

@@ -1,5 +1,7 @@
 package com.internship.juglottery.service;
 
+import java.util.List;
+
 public interface RandomizeService {
-    int randomize(int numberOfParticipants);
+    List<Integer> randomize(int range, int amountOfNumbers);
 }
