@@ -37,7 +37,9 @@ public class RandomOrgServiceImpl implements RandomizeService {
         RandomOrgResponse randomOrgResponse = convert(response);
         log.info("getResponse(...) = (" + randomOrgResponse + ")");
 
-        if (response == null) return null;
+        if (response == null || randomOrgResponse.getResult() == null) {
+            return null;
+        }
         return randomOrgResponse.getResult().getRandom().getData();
     }
 
