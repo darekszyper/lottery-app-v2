@@ -3,10 +3,12 @@ package com.internship.juglottery.service.impl;
 import com.google.gson.Gson;
 import com.internship.juglottery.dto.request.RandomOrgRequest;
 import com.internship.juglottery.dto.response.RandomOrgResponse;
+import com.internship.juglottery.service.RandomizeService;
 import lombok.RequiredArgsConstructor;
 import okhttp3.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -15,7 +17,8 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RandomOrgServiceImpl {
+@Primary
+public class RandomOrgServiceImpl implements RandomizeService {
 
     @Value("${RANDOM_API_KEY}")
     private String API_KEY;
@@ -24,8 +27,9 @@ public class RandomOrgServiceImpl {
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson;
 
+    @Override
     public List<Integer> randomize(int range, int amountOfNumbers) {
-        RandomOrgRequest request = buildRequest(range, amountOfNumbers);
+        RandomOrgRequest request = buildRequest(amountOfNumbers, range);
 
         log.info("getResponse(" + API_URL + ", " + request + ")");
         String response = getResponse(request);
