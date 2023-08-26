@@ -5,10 +5,9 @@ import com.internship.juglottery.dto.request.RandomOrgRequest;
 import com.internship.juglottery.dto.response.RandomOrgResponse;
 import com.internship.juglottery.service.RandomizeService;
 import lombok.RequiredArgsConstructor;
-import okhttp3.*;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Primary
 public class RandomOrgServiceImpl implements RandomizeService {
 
     @Value("${RANDOM_API_KEY}")

@@ -10,7 +10,6 @@ import com.internship.juglottery.repository.LotteryRepo;
 import com.internship.juglottery.repository.WinnerRepo;
 import com.internship.juglottery.service.LotteryService;
 import com.internship.juglottery.service.ParticipantService;
-import com.internship.juglottery.service.RandomizeService;
 import com.internship.juglottery.service.VoucherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,8 @@ public class LotteryServiceImpl implements LotteryService {
     private final LotteryRepo lotteryRepo;
     private final ParticipantService participantService;
     private final VoucherService voucherService;
-    private final RandomizeService randomizeService;
+    private final RandomOrgServiceImpl randomOrgService;
+    private final RandomizeServiceImpl randomizeService;
     private final WinnerRepo winnerRepo;
 
     @Override
@@ -97,7 +97,11 @@ public class LotteryServiceImpl implements LotteryService {
 
     private void assignWinners(List<Participant> participants, List<Voucher> vouchers,
                                List<Winner> winners, Lottery lottery) {
-        List<Integer> winnersIndexes = randomizeService.randomize(participants.size() - 1, vouchers.size());
+        List<Integer> winnersIndexes = randomOrgService.randomize(participants.size() - 1, vouchers.size());
+
+        if (winnersIndexes == null) {
+            winnersIndexes = randomizeService.randomize(participants.size() - 1, vouchers.size());
+        }
 
         for (Integer winnersIndex : winnersIndexes) {
             winners.add(new Winner(participants.get(winnersIndex), vouchers.get(0), lottery));
