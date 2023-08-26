@@ -2,8 +2,7 @@ package com.internship.juglottery.service;
 
 import com.internship.juglottery.entity.*;
 import com.internship.juglottery.entity.enums.Status;
-import com.internship.juglottery.event.VouchersSentEvent;
-import com.internship.juglottery.exception.LotteryIsFinishedException;
+import com.internship.juglottery.exception.LotteryNotActiveException;
 import com.internship.juglottery.repository.LotteryRepo;
 import com.internship.juglottery.repository.WinnerRepo;
 import com.internship.juglottery.service.impl.LotteryServiceImpl;
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.context.ApplicationEventPublisher;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -41,8 +39,6 @@ class LotteryServiceTest {
     private Voucher voucher;
     @Mock
     private AppUser appUser;
-    @Mock
-    ApplicationEventPublisher eventPublisher;
 
     @InjectMocks
     private LotteryServiceImpl lotteryServiceImpl;
@@ -88,6 +84,7 @@ class LotteryServiceTest {
         Long lotteryId = 1L;
         when(participantService.getParticipantsByLotteryId(lotteryId)).thenReturn(new ArrayList<>());
         when(voucherService.getVouchersByLotteryId(lotteryId)).thenReturn(new ArrayList<>());
+        when(lotteryRepo.getStatusFromDb(lotteryId)).thenReturn(Status.ACTIVE);
 
 
         //when
@@ -95,7 +92,6 @@ class LotteryServiceTest {
 
         //then
         assertEquals(0, winners.size());
-        verify(eventPublisher, times(1)).publishEvent(any(VouchersSentEvent.class));
         verify(lotteryRepo, times(1)).findById(lotteryId);
     }
 
@@ -131,13 +127,13 @@ class LotteryServiceTest {
         when(lotteryRepo.findById(lotteryId)).thenReturn(Optional.of(lottery));
         when(randomizeService.randomize(participants.size() - 1, vouchers.size())).thenReturn(List.of(0, 1));
         when(winnerRepo.saveAll(any())).thenReturn(winners1);
+        when(lotteryRepo.getStatusFromDb(lotteryId)).thenReturn(Status.ACTIVE);
 
         //when
         List<Winner> winners2 = lotteryServiceImpl.pickWinners(lotteryId);
 
         //then
         assertEquals(2, winners2.size());
-        verify(eventPublisher, times(1)).publishEvent(any(VouchersSentEvent.class));
         verify(lotteryRepo, times(1)).findById(lotteryId);
         verify(lotteryRepo, times(1)).changeStatusToFinished(lotteryId);
         verify(lotteryRepo, times(1)).setEventDate(lotteryId);
@@ -169,20 +165,6 @@ class LotteryServiceTest {
         //then
         assertInstanceOf(Lottery.class, lotteryEntity);
         verify(lotteryRepo, times(1)).save(lotteryEntity);
-    }
-
-    @Test
-    @DisplayName("Should return true if lottery is finished")
-    void shouldReturnTrueIfLotteryIsFinished() {
-        //given
-        Long lotteryId = 1L;
-        when(lotteryRepo.getStatusFromDb(lotteryId)).thenReturn(Status.FINISHED);
-
-        //when
-        boolean lotteryStatus = lotteryServiceImpl.isLotteryStatusFinished(lotteryId);
-
-        //then
-        assertTrue(lotteryStatus);
     }
 
     @Test
@@ -220,6 +202,6 @@ class LotteryServiceTest {
         when(lotteryRepo.getStatusFromDb(lotteryId)).thenReturn(Status.FINISHED);
 
         //then
-        assertThrows(LotteryIsFinishedException.class, () -> lotteryServiceImpl.pickWinners(lotteryId));
+        assertThrows(LotteryNotActiveException.class, () -> lotteryServiceImpl.pickWinners(lotteryId));
     }
 }

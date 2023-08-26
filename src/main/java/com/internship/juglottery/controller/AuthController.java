@@ -6,7 +6,6 @@ import com.internship.juglottery.entity.AppUser;
 import com.internship.juglottery.service.AppUserService;
 import com.internship.juglottery.service.impl.EmailSenderService;
 import com.internship.juglottery.service.impl.PasswordServiceImpl;
-import com.internship.juglottery.service.impl.RandomOrgServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,6 @@ public class AuthController {
     private final AppUserService appUserService;
     private final PasswordServiceImpl passwordService;
     private final EmailSenderService emailSenderService;
-    private final RandomOrgServiceImpl randomOrgService;
 
     @GetMapping("/login")
     public String showLoginPage() {
@@ -68,7 +66,6 @@ public class AuthController {
     @GetMapping("/reset_password")
     public String showForgotPassword(Model model) {
         model.addAttribute("emailRequest", new EmailRequest());
-        System.out.println(randomOrgService.randomize(10, 9));
         return "reset_password";
     }
 

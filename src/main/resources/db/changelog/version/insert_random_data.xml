@@ -70,6 +70,34 @@
             <column name="app_user_id" value="2"/>
         </insert>
         <insert tableName="voucher">
+            <column name="voucher_name" value="name1user2"/>
+            <column name="activation_code" value="ABC123XYZ"/>
+            <column name="expiration_date" value="2023-08-15"/>
+            <column name="lottery_id" value="1"/>
+            <column name="app_user_id" value="2"/>
+        </insert>
+        <insert tableName="voucher">
+            <column name="voucher_name" value="name2user2"/>
+            <column name="activation_code" value="XYZ987ABC"/>
+            <column name="expiration_date" value="2023-09-30"/>
+            <column name="lottery_id" value="1"/>
+            <column name="app_user_id" value="2"/>
+        </insert>
+        <insert tableName="voucher">
+            <column name="voucher_name" value="name1user2"/>
+            <column name="activation_code" value="ABC123XYZ"/>
+            <column name="expiration_date" value="2023-08-15"/>
+            <column name="lottery_id" value="1"/>
+            <column name="app_user_id" value="2"/>
+        </insert>
+        <insert tableName="voucher">
+            <column name="voucher_name" value="name2user2"/>
+            <column name="activation_code" value="XYZ987ABC"/>
+            <column name="expiration_date" value="2023-09-30"/>
+            <column name="lottery_id" value="1"/>
+            <column name="app_user_id" value="2"/>
+        </insert>
+        <insert tableName="voucher">
             <column name="voucher_name" value="name3user2"/>
             <column name="activation_code" value="XYZ987ABC"/>
             <column name="expiration_date" value="2023-09-30"/>

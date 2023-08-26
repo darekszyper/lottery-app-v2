@@ -23,7 +23,7 @@ public class LotteryRequest {
 
     @NotBlank(message = "City required")
     @Size(max = 32, message = "City must be less than 50 characters")
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "Only letters are allowed in the city")
+    @Pattern(regexp = "^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+$", message = "Only letters are allowed in the city")
     private String city;
 
     @Size(min = 1, message = "At least one voucher required")

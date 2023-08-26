@@ -1,13 +1,13 @@
 package com.internship.juglottery.controller;
 
 import com.internship.juglottery.dto.request.LotteryRequest;
-import com.internship.juglottery.dto.request.VoucherRequest;
 import com.internship.juglottery.dto.response.LotteryResponse;
 import com.internship.juglottery.dto.response.ParticipantResponse;
 import com.internship.juglottery.dto.response.VoucherResponse;
 import com.internship.juglottery.entity.Lottery;
 import com.internship.juglottery.entity.Voucher;
-import com.internship.juglottery.exception.LotteryIsFinishedException;
+import com.internship.juglottery.event.VouchersSentEvent;
+import com.internship.juglottery.exception.LotteryNotActiveException;
 import com.internship.juglottery.mapper.LotteryMapper;
 import com.internship.juglottery.mapper.ParticipantMapper;
 import com.internship.juglottery.mapper.VoucherMapper;
@@ -18,6 +18,7 @@ import com.internship.juglottery.service.VoucherService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +41,7 @@ public class LotteryController {
     private final VoucherService voucherService;
     private final ParticipantService participantService;
     private final AppUserService appUserService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @GetMapping
     public String showUserMainPage(Model model, Principal principal) {
@@ -87,10 +89,11 @@ public class LotteryController {
                     .map(participantMapper::mapToParticipantResponse)
                     .toList();
             model.addAttribute("winners", winners);
+            eventPublisher.publishEvent(new VouchersSentEvent(eventId));
             return "winners";
-        } catch (LotteryIsFinishedException exception) {
+        } catch (LotteryNotActiveException exception) {
             log.error(exception.getMessage());
-            return "error/lottery_is_finished";
+            return "error/lottery_not_active";
         }
     }
 

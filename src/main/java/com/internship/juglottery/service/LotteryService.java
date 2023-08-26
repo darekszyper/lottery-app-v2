@@ -18,8 +18,6 @@ public interface LotteryService {
 
     Lottery createLotteryWithAssignedVouchers(Lottery lottery, List<Voucher> vouchers);
 
-    boolean isLotteryStatusFinished(Long lotteryId);
-
     void deleteLottery(Long lotteryId);
 
     List<Lottery> getAllLotteriesAssignedToUser(Long userId);

@@ -5,8 +5,7 @@ import com.internship.juglottery.entity.Participant;
 import com.internship.juglottery.entity.Voucher;
 import com.internship.juglottery.entity.Winner;
 import com.internship.juglottery.entity.enums.Status;
-import com.internship.juglottery.event.VouchersSentEvent;
-import com.internship.juglottery.exception.LotteryIsFinishedException;
+import com.internship.juglottery.exception.LotteryNotActiveException;
 import com.internship.juglottery.repository.LotteryRepo;
 import com.internship.juglottery.repository.WinnerRepo;
 import com.internship.juglottery.service.LotteryService;
@@ -14,7 +13,6 @@ import com.internship.juglottery.service.ParticipantService;
 import com.internship.juglottery.service.RandomizeService;
 import com.internship.juglottery.service.VoucherService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +29,6 @@ public class LotteryServiceImpl implements LotteryService {
     private final VoucherService voucherService;
     private final RandomizeService randomizeService;
     private final WinnerRepo winnerRepo;
-    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional
@@ -66,17 +63,10 @@ public class LotteryServiceImpl implements LotteryService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public boolean isLotteryStatusFinished(Long lotteryId) {
-        Status status = lotteryRepo.getStatusFromDb(lotteryId);
-        return status == Status.FINISHED;
-    }
-
-    @Override
     @Transactional
     public List<Winner> pickWinners(Long lotteryId) {
-        if (isLotteryStatusFinished(lotteryId)) {
-            throw new LotteryIsFinishedException("Lottery is finished");
+        if (lotteryRepo.getStatusFromDb(lotteryId) != Status.ACTIVE) {
+            throw new LotteryNotActiveException("Lottery is not active");
         }
 
         changeLotteryStatusToFinished(lotteryId);
@@ -95,15 +85,14 @@ public class LotteryServiceImpl implements LotteryService {
             assignWinners(participants, vouchers, winners, lottery);
         }
 
-        List<Winner> savedWinners = winnerRepo.saveAll(winners);
-        eventPublisher.publishEvent(new VouchersSentEvent(lotteryId));
-        return savedWinners;
+        return winnerRepo.saveAll(winners);
     }
 
     private void removeExcessVouchers(List<Participant> participants, List<Voucher> vouchers) {
         int excessCount = vouchers.size() - participants.size();
-        for (int i = vouchers.size() - 1; i >= excessCount; i--) {
+        for (int i = vouchers.size() - 1; excessCount > 0; i--) {
             vouchers.remove(i).setLottery(null);
+            excessCount--;
         }
     }
 
@@ -112,8 +101,8 @@ public class LotteryServiceImpl implements LotteryService {
 
         List<Integer> winnersIndexes = randomizeService.randomize(participants.size() - 1, vouchers.size());
 
-        for (int i : winnersIndexes) {
-            winners.add(new Winner(participants.get(winnersIndexes.get(i)), vouchers.get(0), lottery));
+        for (Integer winnersIndex : winnersIndexes) {
+            winners.add(new Winner(participants.get(winnersIndex), vouchers.get(0), lottery));
             vouchers.remove(0);
         }
     }
