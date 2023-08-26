@@ -8,7 +8,7 @@ public class RandomOrgRequest {
     private final String jsonrpc = "2.0";
     private final String method = "generateIntegers";
     private RandomOrgParams params;
-    private final int id = 1;
+    private int id;
 
     @Override
     public String toString() {

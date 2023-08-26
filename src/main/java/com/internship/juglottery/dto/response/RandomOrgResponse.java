@@ -12,7 +12,7 @@ public class RandomOrgResponse {
 
     @Override
     public String toString() {
-        return "\nRandomOrgResponse\n{\n" +
+        return "\nRandomOrgResponse:\n{\n" +
                 "\"jsonrpc\": \"" + jsonrpc + '\"' + ",\n" +
                 "\"result\": " + result +
                 "\"id\": " + id +

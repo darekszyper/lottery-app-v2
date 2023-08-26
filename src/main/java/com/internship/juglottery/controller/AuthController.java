@@ -2,7 +2,6 @@ package com.internship.juglottery.controller;
 
 import com.internship.juglottery.dto.request.EmailRequest;
 import com.internship.juglottery.dto.request.ResetPasswordRequest;
-import com.internship.juglottery.dto.response.RandomOrgResponse;
 import com.internship.juglottery.entity.AppUser;
 import com.internship.juglottery.service.AppUserService;
 import com.internship.juglottery.service.impl.EmailSenderService;
@@ -69,8 +68,7 @@ public class AuthController {
     @GetMapping("/reset_password")
     public String showForgotPassword(Model model) {
         model.addAttribute("emailRequest", new EmailRequest());
-        RandomOrgResponse randomize = randomOrgService.randomize(10, 9);
-        System.out.println(randomize.getResult().getRandom().getData());
+        System.out.println(randomOrgService.randomize(10, 9));
         return "reset_password";
     }
 
@@ -96,7 +94,7 @@ public class AuthController {
 
         String result = passwordService.validatePasswordResetToken(resetPasswordRequest.getToken());
 
-        if(result != null) {
+        if (result != null) {
             return "redirect:/login";
         }
 
