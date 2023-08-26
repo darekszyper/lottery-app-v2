@@ -1,9 +1,28 @@
 # JUGLottery Application
 
-**Overview:**
-The JUGLottery application allows for the creation of lotteries accompanied by vouchers. Participants can register for these lotteries by scanning a QR code and completing a provided form. After a specified duration, the lottery ends, and the winner is sent an email containing the voucher.
+Lottery-app is a web application that enables you to create lotteries that are integrated with the **Random.org API**. This API provides **true randomness that comes from atmospheric noise**, ensuring that the lottery results are fair and unbiased. The application has implemented Spring Security 6.1 with role-based authentication, which means that a superuser can create and manage accounts of users who can create lotteries. The application has also configured JavaMailSender, which is used to reset passwords and inform users about their wins. The frontend of the application is created using Thymeleaf, a modern server-side Java template engine that allows for easy development of dynamic web applications.
 
-**Screenshots:**
+# Table of Contents
+  - [Technologies](#technologies)
+  - [Screenshots](#screenshots)
+  - [How to Run the Application](#how-to-run-the-application)
+
+
+## Technologies:
+1. Java 17
+2. Spring Boot 3.1.2
+3. Spring Security 6.1
+4. Spring Events
+5. External API integration
+6. JUunit unit tests and Parameterized tests
+7. Thymeleaf, HTML, CSS, JavaScript
+8. Liquibase
+9. Hibernate
+10. MapStruct
+11. ZXing - a library for generating QR codes
+
+## Screenshots:
+![Zrzut ekranu (2)](https://github.com/darekszyper/lottery-app/assets/114878453/c8aca382-7bcf-448b-8914-1f2aed39618b)
 ![Zrzut ekranu (2)](https://github.com/darekszyper/lottery-app/assets/114878453/c8aca382-7bcf-448b-8914-1f2aed39618b)
 ![Zrzut ekranu (7)](https://github.com/darekszyper/lottery-app/assets/114878453/e17fcdf6-ea58-42af-96f6-ac852a8aa1ec)
 ![Zrzut ekranu (10)](https://github.com/darekszyper/lottery-app/assets/114878453/0c87a998-585e-40b0-b5f7-0091c373f33e)
@@ -18,27 +37,10 @@ The JUGLottery application allows for the creation of lotteries accompanied by v
 ![Zrzut ekranu (4)](https://github.com/darekszyper/lottery-app/assets/114878453/216ff7a7-070a-4eea-980d-6f343938f810)
 ![Zrzut ekranu (5)](https://github.com/darekszyper/lottery-app/assets/114878453/d15736a0-bdcf-415e-bf41-6cc8cbb5c7d4)
 
-
-**Features:**
-1. **Super User Capabilities:**
-    - Authentication:
-        - Allows the Super User to log in and access administrative functionalities.
-    - Lottery Management:
-        - Creation: Set up a new lottery which can later be edited, deleted, or initiated.
-        - Voucher Management: Ability to add, delete, or edit vouchers. These vouchers can then be attached to the lottery.
-2. **Participant Interaction:**
-    - Lottery Initiation:
-        - Generates a QR code upon lottery launch.
-        - Participants can scan the code QR to access a form where they input their name and email.
-    - Lottery Conclusion:
-        - Concludes 10 minutes after initiation.
-        - A winner is randomly selected and subsequently receives an email containing the voucher.
-
-
-**Technologies:**
-1. Java 17
-2. Spring Boot 3.1.2
-3. Spring Security 6.1
-4. MapStruct
-5. Thymeleaf
-6. ZXing - a library for generating QR codes
+## How to run the application:
+1. Clonde the repository to you IDE
+2. Go to Random.org, and register to create your own API key and replace it in the code
+3. Create Gmail account and generate App password and replace it in the code
+4. Run the application and register onto SUPER_USER account login: admin@wp.pl password: password
+5. Create new USER account with your e-mail address, and activate it with instruncions in you mailbox
+6. Sign and enjoy trully random lotteries
