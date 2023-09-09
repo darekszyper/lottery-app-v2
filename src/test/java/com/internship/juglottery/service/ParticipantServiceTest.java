@@ -66,7 +66,7 @@ class ParticipantServiceTest {
         List<Participant> participants1 = new ArrayList<>();
         participants1.add(new Participant("ss", "dd@dd.dd"));
         participants1.add(new Participant("pp", "pp@dd.dd"));
-        when(participantRepo.findByLotteryId(lotteryId)).thenReturn(participants1);
+        when(participantRepo.findByLotteryIdAndEmailConfirmed(lotteryId)).thenReturn(participants1);
 
         //when
         List<Participant> participants = participantServiceImpl.getParticipantsByLotteryId(lotteryId);

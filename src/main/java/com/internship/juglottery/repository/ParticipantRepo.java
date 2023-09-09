@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface ParticipantRepo extends JpaRepository<Participant, Long> {
 
-    List<Participant> findByLotteryId(Long id);
+    @Query("SELECT p FROM Participant p WHERE p.lottery.id = :lotteryId AND p.isEmailConfirmed = true")
+    List<Participant> findByLotteryIdAndEmailConfirmed(Long lotteryId);
 
     @Modifying
     @Query(value = "DELETE FROM Participant WHERE lottery_id = :id", nativeQuery = true)

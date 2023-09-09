@@ -14,7 +14,10 @@ public class RegistrationEmailEventListener {
 
     @EventListener
     public void onApplicationEvent(RegistrationEmailEvent event) {
+        String contextPath = event.contextPath();
+        String token = event.token();
         Participant participant = event.participant();
-        emailSenderService.sendRegistrationForLotteryConfirmation(participant);
+        emailSenderService.sendRegistrationForLotteryConfirmationLink(contextPath, token, participant);
+
     }
 }

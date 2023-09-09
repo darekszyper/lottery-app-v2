@@ -7,11 +7,13 @@ import java.util.List;
 public interface ParticipantService {
     List<Participant> getParticipantsByLotteryId(Long id);
 
-    Participant addParticipant(Participant participant);
+    Participant addParticipant(String contextPath, String token, Participant participant);
 
     boolean isLotteryStatusActive(Long lotteryId);
 
     void removeParticipantId(Long lotteryId);
 
     boolean isEmailAlreadyUsed(Long lotteryId, String email);
+
+    void confirmEmail(String token);
 }

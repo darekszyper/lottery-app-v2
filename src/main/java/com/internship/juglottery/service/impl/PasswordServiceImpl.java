@@ -2,6 +2,7 @@ package com.internship.juglottery.service.impl;
 
 import com.internship.juglottery.entity.AppUser;
 import com.internship.juglottery.entity.PasswordResetToken;
+import com.internship.juglottery.exception.InvalidTokenException;
 import com.internship.juglottery.repository.PasswordTokenRepo;
 import com.internship.juglottery.service.AppUserService;
 import lombok.RequiredArgsConstructor;
@@ -61,12 +62,12 @@ public class PasswordServiceImpl {
         passwordTokenRepo.save(myToken);
     }
 
-    public String validatePasswordResetToken(String token) {
+    public void validatePasswordResetToken(String token) {
         final PasswordResetToken passToken = passwordTokenRepo.findByToken(token);
 
-        return !isTokenFound(passToken) ? "invalidToken"
-                : isTokenExpired(passToken) ? "expired"
-                : null;
+        if (!isTokenFound(passToken) || isTokenExpired(passToken))
+            throw new InvalidTokenException("Invalid change password token");
+
     }
 
     private boolean isTokenFound(PasswordResetToken passToken) {

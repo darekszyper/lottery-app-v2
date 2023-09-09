@@ -80,7 +80,7 @@ class PasswordServiceImplTest {
         when(passwordTokenRepo.findByToken(token)).thenReturn(passwordResetToken);
         when(passwordResetToken.getExpiryDate()).thenReturn(LocalDateTime.now().plusHours(1));
 
-        //when
+        //when TODO:refactor
         String result = passwordServiceImpl.validatePasswordResetToken(token);
 
         //then
@@ -94,7 +94,7 @@ class PasswordServiceImplTest {
         String token = "null";
         when(passwordTokenRepo.findByToken(token)).thenReturn(null);
 
-        //when
+        //when TODO:refactor
         String result = passwordServiceImpl.validatePasswordResetToken(token);
 
         //then
@@ -109,7 +109,7 @@ class PasswordServiceImplTest {
         when(passwordTokenRepo.findByToken(token)).thenReturn(passwordResetToken);
         when(passwordResetToken.getExpiryDate()).thenReturn(LocalDateTime.now().minusHours(4));
 
-        //when
+        //when TODO:refactor
         String result = passwordServiceImpl.validatePasswordResetToken(token);
 
         //then

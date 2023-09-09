@@ -81,10 +81,11 @@ public class EmailSenderService {
         mailSender.send(message);
     }
 
-    public void sendRegistrationForLotteryConfirmation(Participant participant) {
-        String subject = "Joining confirmation";
+    public void sendRegistrationForLotteryConfirmationLink(String contextPath, String token, Participant participant) {
+        String subject = "Confirm your e-mail";
+        String url = contextPath + "/confirm_email?token=" + token;
         String body = "Hello " + participant.getFirstName() + "!\n\n" +
-                "You have been added to a lottery:\n" +
+                "To finish registration confirm your e-mail:\n" + url +
                 "\nBest regards,\n" +
                 "JUG App Team";
 

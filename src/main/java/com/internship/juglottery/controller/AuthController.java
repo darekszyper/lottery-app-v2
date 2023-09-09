@@ -3,6 +3,7 @@ package com.internship.juglottery.controller;
 import com.internship.juglottery.dto.request.EmailRequest;
 import com.internship.juglottery.dto.request.ResetPasswordRequest;
 import com.internship.juglottery.entity.AppUser;
+import com.internship.juglottery.exception.InvalidTokenException;
 import com.internship.juglottery.service.AppUserService;
 import com.internship.juglottery.service.impl.EmailSenderService;
 import com.internship.juglottery.service.impl.PasswordServiceImpl;
@@ -71,14 +72,16 @@ public class AuthController {
 
     @GetMapping("/change_password")
     public String showChangePasswordPage(Model model, @RequestParam("token") String token) {
-        String result = passwordService.validatePasswordResetToken(token);
-        if (result != null) {
+        try {
+            passwordService.validatePasswordResetToken(token);
+        } catch (InvalidTokenException e) {
+            log.error(e.getMessage());
             return "redirect:/login";
-        } else {
-            model.addAttribute("token", token);
-            model.addAttribute("changePassword", new ResetPasswordRequest());
-            return "change_password";
         }
+
+        model.addAttribute("token", token);
+        model.addAttribute("changePassword", new ResetPasswordRequest());
+        return "change_password";
     }
 
     @PostMapping("/change_password")
@@ -89,9 +92,10 @@ public class AuthController {
             return "error/change_password_error";
         }
 
-        String result = passwordService.validatePasswordResetToken(resetPasswordRequest.getToken());
-
-        if (result != null) {
+        try {
+            passwordService.validatePasswordResetToken(resetPasswordRequest.getToken());
+        } catch (InvalidTokenException e) {
+            log.error(e.getMessage());
             return "redirect:/login";
         }
 

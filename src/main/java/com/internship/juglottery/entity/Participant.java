@@ -21,6 +21,9 @@ public class Participant {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "is_email_confirmed")
+    private boolean isEmailConfirmed;
+
     @JoinColumn(name = "lottery_id")
     @ManyToOne
     private Lottery lottery;

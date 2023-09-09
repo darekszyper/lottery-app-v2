@@ -48,7 +48,22 @@
             <column name="email" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="is_email_confirmed" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
             <column name="lottery_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="registration_token">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="token" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="participant_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -124,6 +139,9 @@
         <addForeignKeyConstraint baseTableName="password_reset_token" baseColumnNames="user_id"
                                  constraintName="FK_token_user"
                                  referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="registration_token" baseColumnNames="participant_id"
+                                 constraintName="FK_token_participant"
+                                 referencedTableName="participant" referencedColumnNames="id"/>
 
     </changeSet>
 </databaseChangeLog>
