@@ -98,10 +98,11 @@ class EmailSenderServiceTest {
     }
 
     @Test
-    @DisplayName("Should sent greeting email")
-    void shouldSentGreetingEmail() {
-        //when TODO: refactor
-        emailSenderService.sendRegistrationForLotteryConfirmationLink(new Participant());
+    @DisplayName("Should sent confirmation link")
+    void shouldSentConfirmationLink() {
+        // when
+        emailSenderService.sendRegistrationForLotteryConfirmationLink("contextPath",
+                "token", new Participant());
 
         //then
         verify(javaMailSender, times(1)).send(any(SimpleMailMessage.class));

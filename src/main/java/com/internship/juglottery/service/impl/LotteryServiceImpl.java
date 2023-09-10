@@ -76,8 +76,10 @@ public class LotteryServiceImpl implements LotteryService {
         List<Winner> winners = new ArrayList<>();
         Optional<Lottery> lotteryOptional = lotteryRepo.findById(lotteryId);
 
-        if (participants.size() < vouchers.size()) removeExcessVouchers(participants, vouchers);
-        if (participants.isEmpty()) return winners;
+        if (participants.size() < vouchers.size())
+            removeExcessVouchers(participants, vouchers);
+        if (participants.isEmpty())
+            return winners;
 
         if (lotteryOptional.isPresent()) {
             Lottery lottery = lotteryOptional.get();

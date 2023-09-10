@@ -2,6 +2,7 @@ package com.internship.juglottery.service.impl;
 
 import com.internship.juglottery.entity.AppUser;
 import com.internship.juglottery.entity.PasswordResetToken;
+import com.internship.juglottery.exception.InvalidTokenException;
 import com.internship.juglottery.repository.PasswordTokenRepo;
 import com.internship.juglottery.service.AppUserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -73,32 +74,14 @@ class PasswordServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should return null when everything is ok")
-    void shouldReturnNull() {
-        //given
-        String token = "123qwe";
-        when(passwordTokenRepo.findByToken(token)).thenReturn(passwordResetToken);
-        when(passwordResetToken.getExpiryDate()).thenReturn(LocalDateTime.now().plusHours(1));
-
-        //when TODO:refactor
-        String result = passwordServiceImpl.validatePasswordResetToken(token);
-
-        //then
-        assertNull(result);
-    }
-
-    @Test
-    @DisplayName("Should return 'invalidToken' when token is null")
-    void shouldReturnInvalidToken() {
+    @DisplayName("Should throw InvalidTokenException when token is null")
+    void shouldThrowInvalidTokenException() {
         //given
         String token = "null";
         when(passwordTokenRepo.findByToken(token)).thenReturn(null);
 
-        //when TODO:refactor
-        String result = passwordServiceImpl.validatePasswordResetToken(token);
-
-        //then
-        assertEquals("invalidToken", result);
+        //when, then
+        assertThrows(InvalidTokenException.class, () -> passwordServiceImpl.validatePasswordResetToken(token));
     }
 
     @Test
@@ -109,11 +92,8 @@ class PasswordServiceImplTest {
         when(passwordTokenRepo.findByToken(token)).thenReturn(passwordResetToken);
         when(passwordResetToken.getExpiryDate()).thenReturn(LocalDateTime.now().minusHours(4));
 
-        //when TODO:refactor
-        String result = passwordServiceImpl.validatePasswordResetToken(token);
-
-        //then
-        assertEquals("expired", result);
+        //when, then
+        assertThrows(InvalidTokenException.class, () -> passwordServiceImpl.validatePasswordResetToken(token));
     }
 
     @Test

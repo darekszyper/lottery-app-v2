@@ -6,6 +6,8 @@ import com.internship.juglottery.exception.LotteryNotActiveException;
 import com.internship.juglottery.repository.LotteryRepo;
 import com.internship.juglottery.repository.WinnerRepo;
 import com.internship.juglottery.service.impl.LotteryServiceImpl;
+import com.internship.juglottery.service.impl.RandomOrgServiceImpl;
+import com.internship.juglottery.service.impl.RandomizeServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,7 +30,9 @@ class LotteryServiceTest {
     @Mock
     private VoucherService voucherService;
     @Mock
-    private RandomizeService randomizeService;
+    private RandomizeServiceImpl randomizeService;
+    @Mock
+    private RandomOrgServiceImpl randomOrgService;
     @Mock
     private LotteryRepo lotteryRepo;
     @Mock
@@ -121,7 +125,7 @@ class LotteryServiceTest {
         winners1.add(new Winner(participant1, voucher1, lottery));
         winners1.add(new Winner(participant2, voucher2, lottery));
 
-
+        when(randomOrgService.randomize(participants.size() - 1, vouchers.size())).thenReturn(null);
         when(participantService.getParticipantsByLotteryId(lotteryId)).thenReturn(participants);
         when(voucherService.getVouchersByLotteryId(lotteryId)).thenReturn(vouchers);
         when(lotteryRepo.findById(lotteryId)).thenReturn(Optional.of(lottery));

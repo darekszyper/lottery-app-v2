@@ -3,11 +3,13 @@ package com.internship.juglottery.service;
 
 import com.internship.juglottery.entity.Lottery;
 import com.internship.juglottery.entity.Participant;
+import com.internship.juglottery.entity.RegistrationToken;
 import com.internship.juglottery.entity.enums.Status;
 import com.internship.juglottery.event.RegistrationEmailEvent;
 import com.internship.juglottery.exception.LotteryNotActiveException;
 import com.internship.juglottery.repository.LotteryRepo;
 import com.internship.juglottery.repository.ParticipantRepo;
+import com.internship.juglottery.repository.RegistrationTokenRepo;
 import com.internship.juglottery.service.impl.ParticipantServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,6 +31,8 @@ class ParticipantServiceTest {
     LotteryRepo lotteryRepo;
     @Mock
     ParticipantRepo participantRepo;
+    @Mock
+    RegistrationTokenRepo registrationTokenRepo;
     @Mock
     Participant participant;
     @Mock
@@ -85,7 +89,8 @@ class ParticipantServiceTest {
         when(participant.getLottery().getId()).thenReturn(lotteryId);
 
         //then
-        assertThrows(LotteryNotActiveException.class, () -> participantServiceImpl.addParticipant(participant));
+        assertThrows(LotteryNotActiveException.class, () -> participantServiceImpl.addParticipant(
+                "contextPath", "token", participant));
     }
 
     @Test
@@ -93,13 +98,15 @@ class ParticipantServiceTest {
     void shouldAddParticipantWhenLotteryStatusIsActive() {
         //given
         Long lotteryId = 1L;
+        when(registrationTokenRepo.save(any(RegistrationToken.class))).thenReturn(new RegistrationToken());
         when(lotteryRepo.getStatusFromDb(lotteryId)).thenReturn(Status.ACTIVE);
         when(participant.getLottery()).thenReturn(lottery);
         when(participant.getLottery().getId()).thenReturn(lotteryId);
         when(participantRepo.save(participant)).thenReturn(participant);
 
         //when
-        Participant participantEntity = participantServiceImpl.addParticipant(participant);
+        Participant participantEntity = participantServiceImpl.addParticipant(
+                "contextPath", "token", participant);
 
         //then
         assertInstanceOf(Participant.class, participantEntity);
