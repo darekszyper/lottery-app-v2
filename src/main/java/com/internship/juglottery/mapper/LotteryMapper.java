@@ -1,6 +1,7 @@
 package com.internship.juglottery.mapper;
 
 import com.internship.juglottery.dto.request.LotteryRequest;
+import com.internship.juglottery.dto.response.FinishedLotteryResponse;
 import com.internship.juglottery.dto.response.LotteryResponse;
 import com.internship.juglottery.entity.Lottery;
 import com.internship.juglottery.entity.enums.Status;
@@ -13,6 +14,9 @@ public abstract class LotteryMapper {
 
     @Mapping(source = "userId", target = "appUser.id")
     public abstract Lottery mapToEntity(LotteryRequest lotteryRequest);
+
+
+    public abstract FinishedLotteryResponse mapToFinishedLotteryResponse(Lottery lottery);
 
     @BeforeMapping
     protected void setNotActiveStatus(@MappingTarget Lottery lottery) {

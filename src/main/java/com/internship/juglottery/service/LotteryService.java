@@ -21,4 +21,6 @@ public interface LotteryService {
     void deleteLottery(Long lotteryId);
 
     List<Lottery> getAllLotteriesAssignedToUser(Long userId);
+
+    List<Lottery> getAllFinishedLotteriesAssignedToUser(Long userId);
 }

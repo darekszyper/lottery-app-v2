@@ -39,6 +39,9 @@ public class Lottery {
     @OneToMany(mappedBy = "lottery")
     List<Voucher> vouchers;
 
+    @OneToMany(mappedBy = "lottery", fetch = FetchType.EAGER)
+    List<Winner> winners;
+
     @ManyToOne
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;

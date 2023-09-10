@@ -1,9 +1,7 @@
 package com.internship.juglottery.controller;
 
 import com.internship.juglottery.dto.request.LotteryRequest;
-import com.internship.juglottery.dto.response.LotteryResponse;
-import com.internship.juglottery.dto.response.ParticipantResponse;
-import com.internship.juglottery.dto.response.VoucherResponse;
+import com.internship.juglottery.dto.response.*;
 import com.internship.juglottery.entity.Lottery;
 import com.internship.juglottery.entity.Voucher;
 import com.internship.juglottery.event.VouchersSentEvent;
@@ -124,5 +122,15 @@ public class LotteryController {
         Lottery lottery = lotteryMapper.mapToEntity(lotteryRequest);
         lotteryService.createLotteryWithAssignedVouchers(lottery, vouchers);
         return "redirect:/lottery";
+    }
+
+    @GetMapping("/previous_winners")
+    public String displayPreviousWinners(Model model, Principal principal) {
+        Long userId = appUserService.getUserIdByEmail(principal.getName());
+
+        List<FinishedLotteryResponse> lotteries = lotteryService.getAllFinishedLotteriesAssignedToUser(userId).stream()
+                .map(lotteryMapper::mapToFinishedLotteryResponse).toList();
+        model.addAttribute("lotteries", lotteries);
+        return "previous_winners";
     }
 }

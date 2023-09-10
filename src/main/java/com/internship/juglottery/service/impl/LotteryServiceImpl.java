@@ -122,4 +122,9 @@ public class LotteryServiceImpl implements LotteryService {
     public List<Lottery> getAllLotteriesAssignedToUser(Long userId) {
         return lotteryRepo.findAllByAppUserIdAndStatus(userId, Status.NOT_ACTIVE);
     }
+
+    @Override
+    public List<Lottery> getAllFinishedLotteriesAssignedToUser(Long userId) {
+        return lotteryRepo.findAllByAppUserIdAndStatus(userId, Status.FINISHED);
+    }
 }
