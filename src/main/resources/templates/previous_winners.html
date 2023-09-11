@@ -21,7 +21,7 @@
 
         <th:block th:each="lottery: ${lotteries}">
             <p>
-                <span th:text="${lottery.eventName}"></span>
+                <span th:text="${lottery.eventName} + ' | ' + ${lottery.lotteryDate} + ' | ' + ${lottery.city}"></span>
                 <button th:onclick="'toggleWinners(\'' + ${lottery.id} + '\')'" style="margin-left: auto;">&#9660;
                 </button>
             </p>
@@ -34,8 +34,21 @@
                         </button>
                     </li>
                     <ul class="participant-details" th:id="'details-' + ${lottery.id + '-' + winnerIndex.index}">
-                        <li th:text="${winner.participant.email}"></li>
-                        <li>tutaj bedzie voucher</li>
+                        <li>E-mail:<br>
+                            <span th:text="${winner.participant.email}"></span>
+                        </li>
+                        <li>
+                            Voucher name:<br>
+                            <span th:text="${winner.voucher.voucherName}"></span>
+                        </li>
+                        <li>
+                            Activation code:<br>
+                            <span th:text="${winner.voucher.activationCode}"></span>
+                        </li>
+                        <li>
+                            Expiration date:<br>
+                            <span th:text="${winner.voucher.expirationDate}"></span>
+                        </li>
                     </ul>
                 </th:block>
             </ul>
