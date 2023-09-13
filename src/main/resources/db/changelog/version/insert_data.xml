@@ -8,7 +8,7 @@
         <insert tableName="app_user">
             <column name="email" value="admin"/>
             <column name="name" value="Super User"/>
-            <column name="password" value="${ADMIN_PASSWORD}"/>
+            <column name="password" value="$2a$12$YZMgk.Xr5cYLG1Q1RsBpxeftB1agBpZySFama7F7a6cadAaRRmkn6"/>
             <column name="role" value="SUPER_USER"/>
         </insert>
         <insert tableName="app_user">
