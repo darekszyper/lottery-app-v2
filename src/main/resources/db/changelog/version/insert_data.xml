@@ -48,6 +48,12 @@
             <column name="city" value="Bialystok"/>
             <column name="app_user_id" value="3"/>
         </insert>
+        <insert tableName="lottery">
+            <column name="event_name" value="test"/>
+            <column name="status" value="NOT_ACTIVE"/>
+            <column name="city" value="test"/>
+            <column name="app_user_id" value="3"/>
+        </insert>
 
         <insert tableName="voucher">
             <column name="voucher_name" value="name1user2"/>
