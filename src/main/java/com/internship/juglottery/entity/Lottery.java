@@ -46,11 +46,14 @@ public class Lottery {
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 
-    public Lottery(String eventName, LocalDate lotteryDate, List<Voucher> vouchers, Status status, List<Participant> participants) {
+    public Lottery(Long id, String eventName, String city, LocalDate lotteryDate, Status status, List<Participant> participants, List<Voucher> vouchers, AppUser appUser) {
+        this.id = id;
         this.eventName = eventName;
+        this.city = city;
         this.lotteryDate = lotteryDate;
         this.status = status;
         this.participants = participants;
         this.vouchers = vouchers;
+        this.appUser = appUser;
     }
 }
