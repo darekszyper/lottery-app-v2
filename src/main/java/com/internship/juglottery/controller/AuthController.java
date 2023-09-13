@@ -23,6 +23,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static com.internship.juglottery.entity.enums.Role.SUPER_USER;
+import static com.internship.juglottery.entity.enums.Role.USER;
 
 @Controller
 @Slf4j
@@ -34,7 +35,12 @@ public class AuthController {
     private final EmailSenderService emailSenderService;
 
     @GetMapping("/login")
-    public String showLoginPage() {
+    public String showLoginPage(HttpServletRequest request) {
+        if (request.isUserInRole(SUPER_USER.name())) {
+            return "redirect:/account_management";
+        } else if (request.isUserInRole(USER.name())) {
+            return "redirect:/lottery";
+        }
         return "login";
     }
 

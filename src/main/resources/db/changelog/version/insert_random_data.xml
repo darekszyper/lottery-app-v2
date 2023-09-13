@@ -6,9 +6,9 @@
     <changeSet id="2" author="Dariusz Szyperek">
 
         <insert tableName="app_user">
-            <column name="email" value="admin@wp.pl"/>
+            <column name="email" value="admin"/>
             <column name="name" value="Super User"/>
-            <column name="password" value="$2y$10$62UlZIGR.MkT.vjSXags9uMyH5.1MS22mhh4BIjGl3cO4MKmPy/qa"/>
+            <column name="password" value="${ADMIN_PASSWORD}"/>
             <column name="role" value="SUPER_USER"/>
         </insert>
         <insert tableName="app_user">

@@ -10,7 +10,6 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,7 +24,6 @@ import static com.internship.juglottery.entity.enums.Role.USER;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    // users from db: SUPER_USER admin@wp.pl password USER user1@wp.pl password1 user2@wp.pl password2
 
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -34,9 +32,6 @@ public class SecurityConfig {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
         http
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**"))) //TODO: only for h2, remove later
-                .headers(AbstractHttpConfigurer::disable) //only for h2, remove later
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(mvcMatcherBuilder.pattern("/account_management/**")).hasRole(SUPER_USER.name())
                         .requestMatchers(mvcMatcherBuilder.pattern("/default")).hasAnyRole(USER.name(), SUPER_USER.name())
@@ -45,7 +40,6 @@ public class SecurityConfig {
                         .requestMatchers(mvcMatcherBuilder.pattern("/change_password")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/css/**")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/img/**")).permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll() //only for h2, remove later
                         .anyRequest().hasRole(USER.name())
                 )
                 .formLogin(formLogin -> formLogin
