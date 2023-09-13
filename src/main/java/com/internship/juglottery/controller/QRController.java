@@ -1,6 +1,7 @@
 package com.internship.juglottery.controller;
 
 import com.internship.juglottery.service.QRService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -21,9 +22,12 @@ public class QRController {
     private final QRService qrService;
 
     @GetMapping("{lotteryId}")
-    public void showQRImage(@PathVariable Long lotteryId, HttpServletResponse response) throws IOException {
-        byte[] bytes = qrService.generateQRCode("http://localhost:8080/register/" + lotteryId);
-        response.setContentType("png");
+    public void showQRImage(@PathVariable Long lotteryId,
+                            HttpServletRequest request,
+                            HttpServletResponse response) throws IOException {
+        String hostName = request.getRequestURL().toString().replace("/qr_code/image/" + lotteryId, "");
+        byte[] bytes = qrService.generateQRCode(hostName + "/register/" + lotteryId);
+        response.setContentType("image/png");
 
         InputStream is = new ByteArrayInputStream(bytes);
         IOUtils.copy(is, response.getOutputStream());

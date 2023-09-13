@@ -15,9 +15,7 @@
 <div id="column_400">
     <div id="form_style">
         <div id="qr-code-frame">
-            <img id="qr-code-image"
-                 th:src="@{${'http://localhost:8080/qr_code/image/' + eventId}}"
-                 alt="QR Code">
+            <img id="qr-code-image" alt="QR Code">
         </div>
         <div id="timer">
             <p>Remaining time to register:</p>
@@ -49,6 +47,10 @@
             }
 
         },1000);
+
+        var eventId = /*[[${eventId}]]*/;
+        var qrCodeImage = document.getElementById("qr-code-image");
+        qrCodeImage.src = window.location.origin + '/qr_code/image/' + eventId;
 </script>
 </body>
 </html>
