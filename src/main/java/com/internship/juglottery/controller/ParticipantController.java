@@ -40,7 +40,7 @@ public class ParticipantController {
         if (bindingResult.hasErrors()) {
             log.error("Validation error: {}", bindingResult.getAllErrors());
             return "error/participant_validation_error";
-        } else if (!(participantService.isEmailAlreadyUsed(participantRequest.getLotteryId(), participantRequest.getEmail()))) {
+        } else if ((participantService.isEmailAlreadyUsed(participantRequest.getLotteryId(), participantRequest.getEmail()))) {
             log.error("Validation error: email already exists");
             bindingResult.rejectValue("email", "email.exists", "Email already exists");
             return "error/participant_validation_error";

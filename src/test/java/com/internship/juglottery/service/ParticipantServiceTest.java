@@ -128,8 +128,8 @@ class ParticipantServiceTest {
     }
 
     @Test
-    @DisplayName("Should return true if email is not already used")
-    void shouldReturnTrueIfEmailNotUsed() {
+    @DisplayName("Should return false if email is not already used")
+    void shouldReturnFalseIfEmailNotUsed() {
         //given
         Long lotteryId = 1L;
         String email = "zak@wp.pl";
@@ -139,6 +139,6 @@ class ParticipantServiceTest {
         boolean result = participantServiceImpl.isEmailAlreadyUsed(lotteryId, email);
 
         //then
-        assertTrue(result);
+        assertFalse(result);
     }
 }
