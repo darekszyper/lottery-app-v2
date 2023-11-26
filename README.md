@@ -1,12 +1,10 @@
 # JUGLottery Application
 
-Lottery-app is a web application that enables you to create lotteries that are integrated with the **Random.org API**. This API provides **true randomness that comes from atmospheric noise**, ensuring that the lottery results are fair and unbiased. The application has implemented Spring Security 6.1 with role-based authentication, which means that a superuser can create and manage accounts of users who can create lotteries. The application has also configured JavaMailSender, which is used to reset passwords and inform users about their wins. The frontend of the application is created using Thymeleaf, a modern server-side Java template engine that allows for easy development of dynamic web applications.
+Lottery-app is a web application that enables you to create lotteries that are integrated with the **Random.org API**. This API provides **true randomness that comes from atmospheric noise**, ensuring that the lottery results are fair and unbiased. The application has implemented Spring Security 6.1 with role-based authentication, which means that a superuser can create and manage accounts of users who can create lotteries. The application has also configured JavaMailSender, which is used to reset passwords and inform users about their wins. The frontend of the application is created using Thymeleaf, a server-side Java template engine that allows for easy development of dynamic web applications.
 
 # Table of Contents
   - [Technologies](#technologies)
   - [Screenshots](#screenshots)
-  - [How to Run the Application](#how-to-run-the-application)
-
 
 ## Technologies:
 1. Java 17
@@ -36,11 +34,3 @@ Lottery-app is a web application that enables you to create lotteries that are i
 ![Zrzut ekranu (3)](https://github.com/darekszyper/lottery-app/assets/114878453/8095e901-a12f-4fc3-bde7-96559180c3cd)
 ![Zrzut ekranu (4)](https://github.com/darekszyper/lottery-app/assets/114878453/216ff7a7-070a-4eea-980d-6f343938f810)
 ![Zrzut ekranu (5)](https://github.com/darekszyper/lottery-app/assets/114878453/d15736a0-bdcf-415e-bf41-6cc8cbb5c7d4)
-
-## How to run the application:
-1. Clonde the repository to you IDE
-2. Go to Random.org, and register to create your own API key and replace it in the code
-3. Create Gmail account and generate App password and replace it in the code
-4. Run the application and register onto SUPER_USER account login: admin@wp.pl password: password
-5. Create new USER account with your e-mail address, and activate it with instruncions in you mailbox
-6. Sign and enjoy trully random lotteries
