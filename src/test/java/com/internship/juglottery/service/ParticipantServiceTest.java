@@ -136,7 +136,7 @@ class ParticipantServiceTest {
         when(participantRepo.extractEmail(lotteryId, email)).thenReturn(null);
 
         //when
-        boolean result = participantServiceImpl.isEmailAlreadyUsed(lotteryId, email);
+        boolean result = participantServiceImpl.isEmailAlreadyUsedAndConfirmed(lotteryId, email);
 
         //then
         assertFalse(result);

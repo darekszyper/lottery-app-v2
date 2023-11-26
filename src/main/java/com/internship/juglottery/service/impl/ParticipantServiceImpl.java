@@ -62,7 +62,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public boolean isEmailAlreadyUsed(Long lotteryId, String email) {
+    public boolean isEmailAlreadyUsedAndConfirmed(Long lotteryId, String email) {
         String extractedEmail = participantRepo.extractEmail(lotteryId, email);
         return !(extractedEmail == null || extractedEmail.isEmpty());
     }

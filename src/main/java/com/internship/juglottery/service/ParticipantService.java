@@ -13,7 +13,7 @@ public interface ParticipantService {
 
     void removeParticipantId(Long lotteryId);
 
-    boolean isEmailAlreadyUsed(Long lotteryId, String email);
+    boolean isEmailAlreadyUsedAndConfirmed(Long lotteryId, String email);
 
     void confirmEmail(String token);
 }
