@@ -17,7 +17,6 @@ public class ParticipantRequest {
 
     @NotBlank(message = "First name required")
     @Size(max = 32, message = "Name must be shorter than 32 signs")
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "Only letters are allowed in the name")
     private String firstName;
 
     @NotBlank(message = "Email required")
