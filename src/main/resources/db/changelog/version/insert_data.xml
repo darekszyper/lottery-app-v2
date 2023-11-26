@@ -149,19 +149,16 @@
             <column name="first_name" value="Fred"/>
             <column name="email" value="dszyperek7@gmail.com"/>
             <column name="lottery_id" value="1"/>
-            <column name="is_email_confirmed" value="true"/>
         </insert>
         <insert tableName="participant">
             <column name="first_name" value="George"/>
             <column name="email" value="dszyperek7@gmail.com"/>
             <column name="lottery_id" value="1"/>
-            <column name="is_email_confirmed" value="true"/>
         </insert>
         <insert tableName="participant">
             <column name="first_name" value="Darek"/>
             <column name="email" value="dszyperek7@gmail.com"/>
             <column name="lottery_id" value="2"/>
-            <column name="is_email_confirmed" value="true"/>
         </insert>
         <insert tableName="participant">
             <column name="first_name" value="Kamil"/>

@@ -63,8 +63,7 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public boolean isEmailAlreadyUsedAndConfirmed(Long lotteryId, String email) {
-        String extractedEmail = participantRepo.extractEmail(lotteryId, email);
-        return !(extractedEmail == null || extractedEmail.isEmpty());
+        return participantRepo.isEmailAlreadyUsedAndConfirmed(lotteryId, email);
     }
 
     @Override
@@ -75,6 +74,13 @@ public class ParticipantServiceImpl implements ParticipantService {
             throw new InvalidTokenException("Invalid registration token");
 
         Participant participant = registrationToken.getParticipant();
+
+        String email = participant.getEmail();
+        Long lotteryId = participant.getLottery().getId();
+
+        if (this.isEmailAlreadyUsedAndConfirmed(lotteryId, email))
+            throw new InvalidTokenException("Email is already confirmed");
+
         participant.setEmailConfirmed(true);
         participantRepo.save(participant);
     }

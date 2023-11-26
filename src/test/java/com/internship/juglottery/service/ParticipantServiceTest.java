@@ -132,8 +132,8 @@ class ParticipantServiceTest {
     void shouldReturnFalseIfEmailNotUsed() {
         //given
         Long lotteryId = 1L;
-        String email = "zak@wp.pl";
-        when(participantRepo.extractEmail(lotteryId, email)).thenReturn(null);
+        String email = "email@gmail.com";
+        when(participantRepo.isEmailAlreadyUsedAndConfirmed(lotteryId, email)).thenReturn(false);
 
         //when
         boolean result = participantServiceImpl.isEmailAlreadyUsedAndConfirmed(lotteryId, email);
