@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>New Account</title>
+
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2 class="lottery-heading">
+    Create account
+</h2>
+<div id="column_400">
+
+    <button id="go_back" onclick="history.back()">Back</button>
+
+    <form id="form_style" th:action="@{/account_management/create}" th:object="${user}" method="post">
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" th:field="*{email}" name="email" required><br><br>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" name="name" required><br><br>
+
+        <input type="submit" value="Create account">
+    </form>
+</div>
+
+
+</body>
+</html>

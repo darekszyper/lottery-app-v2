@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Form</title>
+
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2 class="lottery-heading">
+    Register for lottery
+</h2>
+<div id="column_400">
+
+    <form id="form_style" th:action="@{/register}" th:object="${participant}" method="post">
+        <input type="hidden" th:value="${lotteryId}" name="lotteryId"/>
+
+        <label for="first_name">First name:</label>
+        <input type="text" id="first_name" th:field="*{firstName}" name="firstName" required><br><br>
+
+        <label for="email">E-mail:</label>
+        <input type="text" id="email" th:field="*{email}" name="email" required><br><br>
+        <p th:if="${#fields.hasErrors('email')}">Invalid email</p>
+        <input type="submit" value="Send">
+    </form>
+</div>
+
+</body>
+</html>

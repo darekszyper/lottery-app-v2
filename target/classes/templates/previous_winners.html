@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous winners</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <style>
+        .winners-list, .participant-details {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<h2 class="lottery-heading">
+    Previous winners
+</h2>
+<div id="column_400">
+    <button id="go_back" onclick="window.location.href='/lottery'">Back</button>
+    <div id="form_style_ap">
+
+        <th:block th:each="lottery: ${lotteries}">
+            <p>
+                <span th:text="${lottery.eventName} + ' | ' + ${lottery.lotteryDate} + ' | ' + ${lottery.city}"></span>
+                <button th:onclick="'toggleWinners(\'' + ${lottery.id} + '\')'" style="margin-left: auto;">&#9660;
+                </button>
+            </p>
+            <ul class="winners-list" th:id="'winners-' + ${lottery.id}">
+                <th:block th:each="winner, winnerIndex: ${lottery.winners}">
+                    <li>
+                        <span th:text="${winner.participant.firstName}"></span><br>
+                        <button th:onclick="'toggleParticipantDetails(\'' + ${lottery.id} + '-' + ${winnerIndex.index} + '\')'"
+                                style="margin-bottom: 2px;">Show Details
+                        </button>
+                    </li>
+                    <ul class="participant-details" th:id="'details-' + ${lottery.id + '-' + winnerIndex.index}">
+                        <li>E-mail:<br>
+                            <span th:text="${winner.participant.email}"></span>
+                        </li>
+                        <li>
+                            Voucher name:<br>
+                            <span th:text="${winner.voucher.voucherName}"></span>
+                        </li>
+                        <li>
+                            Activation code:<br>
+                            <span th:text="${winner.voucher.activationCode}"></span>
+                        </li>
+                        <li>
+                            Expiration date:<br>
+                            <span th:text="${winner.voucher.expirationDate}"></span>
+                        </li>
+                    </ul>
+                </th:block>
+            </ul>
+
+        </th:block>
+    </div>
+</div>
+
+<script>
+    function toggleWinners(index) {
+        const winnersList = document.getElementById(`winners-${index}`);
+        const elements = document.querySelectorAll(`[id^="details-${index}"]`);
+        if (winnersList.style.display === 'none' || winnersList.style.display === '') {
+            winnersList.style.display = 'block';
+        } else {
+            winnersList.style.display = 'none';
+            elements.forEach(element => {
+                element.style.display = 'none';
+            });
+        }
+    }
+
+    function toggleParticipantDetails(index) {
+        const details = document.getElementById(`details-${index}`);
+        if (details.style.display === 'none' || details.style.display === '') {
+            details.style.display = 'block';
+        } else {
+            details.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>

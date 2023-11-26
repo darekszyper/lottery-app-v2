@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QR Code</title>
+
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2 class="lottery-heading">
+    Scan the QR code
+</h2>
+<div id="column_400">
+    <div id="form_style">
+        <div id="qr-code-frame">
+            <img id="qr-code-image" alt="QR Code">
+        </div>
+        <div id="timer">
+            <p>Remaining time to register:</p>
+            <p id="remaining-time"></p>
+        </div>
+    </div>
+    <div class="button">
+        <a th:href='@{${"/lottery/winners/" + eventId}}'>Finish lottery and show winners</a>
+    </div>
+</div>
+<script th:inline="javascript">
+        var remainingTime = 10;
+        var countDownDate = new Date();
+        countDownDate.setMinutes(countDownDate.getMinutes() + remainingTime);
+
+        var timer = setInterval(function(){
+
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("remaining-time").innerHTML = minutes + "m " + seconds + "s ";
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("form_style").innerHTML = '<p>Lottery has ended</p>';
+            }
+
+        },1000);
+
+        var eventId = /*[[${eventId}]]*/;
+        var qrCodeImage = document.getElementById("qr-code-image");
+        qrCodeImage.src = window.location.origin + '/qr_code/image/' + eventId;
+</script>
+</body>
+</html>
