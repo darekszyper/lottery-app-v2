@@ -7,7 +7,7 @@ body {
 }
 
 #column_400 {
-    width: 400px;
+    max-width: 400px;
     margin: 50px auto;
     position: relative;
 }
