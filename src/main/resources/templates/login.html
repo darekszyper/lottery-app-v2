@@ -7,6 +7,10 @@
     <title>Login Page</title>
 
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
 </head>
 <body>
 <h2 class="lottery-heading">
@@ -15,10 +19,14 @@
 <div id = "column_400">
         <form id = "form_style" th:action="@{/login}" method="post">
             <label for="username">Login:</label>
-            <input type="text" id="username" name="username" required><br><br>
-            
+            <div class="icon-input username-icon">
+            <input type="text" class="modern-input padding-for-icon" id="username" name="username" placeholder="Login" required><br><br>
+            </div>
+
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br><br>
+            <div class="icon-input password-icon">
+            <input type="password" class="modern-input padding-for-icon" id="password" name="password" placeholder="Password" required><br><br>
+            </div>
 
             <div class="inline-elements">
                 <label for="remember"> Remember me</label>
@@ -32,6 +40,5 @@
                 <a href="/reset_password" style="color: blue;">Reset password</a>
         </form>
     </div>
-
 </body>
 </html>

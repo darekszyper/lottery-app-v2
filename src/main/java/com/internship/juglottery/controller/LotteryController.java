@@ -75,12 +75,17 @@ public class LotteryController {
 
     @GetMapping("/qr_code")
     public String startLottery(@RequestParam("eventId") Long eventId, Model model) {
-        lotteryService.changeLotteryStatusToActive(eventId);
+        try {
+            lotteryService.changeLotteryStatusToActive(eventId);
+        } catch (LotteryNotActiveException exception) {
+            log.error(exception.getMessage());
+            return "error/lottery_not_active";
+        }
         model.addAttribute("eventId", eventId);
         return "qr_code";
     }
 
-    @GetMapping("/winners/{eventId}")
+    @PostMapping("/winners/{eventId}")
     public String finishLotteryAndShowWinners(@PathVariable("eventId") Long eventId, Model model) {
         try {
             List<ParticipantResponse> winners = lotteryService.pickWinners(eventId).stream()

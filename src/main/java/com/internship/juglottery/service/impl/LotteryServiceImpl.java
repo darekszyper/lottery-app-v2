@@ -33,6 +33,9 @@ public class LotteryServiceImpl implements LotteryService {
     @Override
     @Transactional
     public void changeLotteryStatusToActive(Long lotteryId) {
+        if (lotteryRepo.getStatusFromDb(lotteryId) == Status.FINISHED) {
+            throw new LotteryNotActiveException("Lottery is finished");
+        }
         lotteryRepo.changeStatusToActive(lotteryId);
     }
 

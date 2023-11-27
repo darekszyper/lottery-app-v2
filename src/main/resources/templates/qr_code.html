@@ -22,11 +22,33 @@
             <p id="remaining-time"></p>
         </div>
     </div>
-    <div class="button">
-        <a th:href='@{${"/lottery/winners/" + eventId}}'>Finish lottery and show winners</a>
+    <!--        <div class="button">-->
+    <!--            <a th:href='@{${"/lottery/winners/" + eventId}}'>Finish lottery and show winners</a>-->
+    <!--        </div>-->
+    <button class="blue-button" onclick="showFinishLotteryConfirmation()">Finish lottery and show winners</button>
+</div>
+
+<div id="finishLotteryConfirmationModal" class="modal">
+    <div class="modal-content">
+        <p>Are you sure you want to finish the lottery and display the winners?</p>
+        <form th:action="@{/lottery/winners/{eventId}(eventId=${eventId})}" method="post">
+            <button class="submit-button-blue" type="submit">Yes, finish lottery</button>
+            <button class="cancel-button" type="button" onclick="closeFinishLotteryConfirmation()">
+                Cancel
+            </button>
+        </form>
     </div>
 </div>
+
 <script th:inline="javascript">
+            function showFinishLotteryConfirmation() {
+        document.getElementById("finishLotteryConfirmationModal").style.display = 'flex';
+    }
+
+    function closeFinishLotteryConfirmation() {
+        document.getElementById("finishLotteryConfirmationModal").style.display = 'none';
+    }
+
         var remainingTime = 10;
         var countDownDate = new Date();
         countDownDate.setMinutes(countDownDate.getMinutes() + remainingTime);
@@ -51,6 +73,9 @@
         var eventId = /*[[${eventId}]]*/;
         var qrCodeImage = document.getElementById("qr-code-image");
         qrCodeImage.src = window.location.origin + '/qr_code/image/' + eventId;
+
+
+
 </script>
 </body>
 </html>

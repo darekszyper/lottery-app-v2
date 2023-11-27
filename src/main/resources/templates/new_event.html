@@ -19,10 +19,10 @@
     <form id="form_style" th:action="@{/lottery/create}" th:object="${lottery}" method="post">
 
         <label for="event_name" class="otherLabels">Event name:</label>
-        <input type="text" id="event_name" class="inputText" th:field="*{eventName}" name="event_name" required><br><br>
+        <input class="modern-input" type="text" id="event_name" th:field="*{eventName}" name="event_name" required><br><br>
 
         <label for="city" class="otherLabels">City:</label>
-        <input type="text" id="city" th:field="*{city}" class="inputText" name="city" required><br><br>
+        <input class="modern-input" type="text" id="city" th:field="*{city}" name="city" required><br><br>
 
         <label class="otherLabels">Choose vouchers:</label><br>
         <div th:each="voucher : ${vouchers}">
