@@ -9,6 +9,7 @@
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body>
+<p th:if="${param.success}" class="success">Voucher added successfully</p>
 <h2 class="lottery-heading">
     Add new voucher
 </h2>
@@ -17,7 +18,6 @@
     <button id="go_back" onclick="window.location.href='/lottery'">Back</button>
 
     <form id="form_style" th:action="@{/voucher/create}" th:object="${voucher}" method="post">
-        <p th:if="${param.success}" style="color:green;">Voucher added successfully</p>
 
         <label for="voucher_name">Voucher name:</label>
         <input class="modern-input" type="text" id="voucher_name" th:field="*{voucherName}" name="voucher_name" required><br><br>

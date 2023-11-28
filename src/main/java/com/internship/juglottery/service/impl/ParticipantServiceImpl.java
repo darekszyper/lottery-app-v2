@@ -13,6 +13,7 @@ import com.internship.juglottery.service.ParticipantService;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     private final LotteryRepo lotteryRepo;
     private final RegistrationTokenRepo registrationTokenRepo;
     private final ApplicationEventPublisher eventPublisher;
+    private final SimpMessagingTemplate template;
 
     @Override
     public List<Participant> getParticipantsByLotteryId(Long lotteryId) {
@@ -83,5 +85,11 @@ public class ParticipantServiceImpl implements ParticipantService {
 
         participant.setEmailConfirmed(true);
         participantRepo.save(participant);
+
+        template.convertAndSend("/topic/participantCount", this.getConfirmedEmailCount(lotteryId));
+    }
+
+    public int getConfirmedEmailCount(Long lotteryId) {
+        return participantRepo.countByIsEmailConfirmedTrueAndLotteryId(lotteryId);
     }
 }

@@ -31,6 +31,7 @@
         <input class="modern-input padding-for-icon" type="text" id="email" th:field="*{email}" name="email" placeholder="Email" required><br><br>
         </div>
         <p th:if="${#fields.hasErrors('email')}">Invalid email</p>
+        <p></p>
         <input type="submit" value="Send">
     </form>
 </div>

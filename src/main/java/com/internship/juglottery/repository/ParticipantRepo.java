@@ -29,4 +29,5 @@ public interface ParticipantRepo extends JpaRepository<Participant, Long> {
     @Query("SELECT COUNT(p) > 0 FROM Participant p WHERE p.lottery.id = :lotteryId AND p.email = :email AND p.isEmailConfirmed = true")
     boolean isEmailAlreadyUsedAndConfirmed(Long lotteryId, String email);
 
+    int countByIsEmailConfirmedTrueAndLotteryId(Long lotteryId);
 }

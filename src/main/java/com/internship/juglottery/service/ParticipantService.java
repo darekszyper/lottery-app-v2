@@ -16,4 +16,6 @@ public interface ParticipantService {
     boolean isEmailAlreadyUsedAndConfirmed(Long lotteryId, String email);
 
     void confirmEmail(String token);
+
+    int getConfirmedEmailCount(Long lotteryId);
 }

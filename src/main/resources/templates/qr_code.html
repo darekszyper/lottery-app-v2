@@ -7,6 +7,8 @@
     <title>QR Code</title>
 
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
 </head>
 <body>
 <h2 class="lottery-heading">
@@ -16,6 +18,9 @@
     <div id="form_style">
         <div id="qr-code-frame">
             <img id="qr-code-image" alt="QR Code">
+        </div>
+        <div class="margin-top-ten">
+            Participants with confirmed Emails: <span id="participantCount">0</span>
         </div>
         <div id="timer">
             <p>Remaining time to register:</p>
@@ -46,32 +51,59 @@
         document.getElementById("finishLotteryConfirmationModal").style.display = 'none';
     }
 
-        var remainingTime = 10;
-        var countDownDate = new Date();
-        countDownDate.setMinutes(countDownDate.getMinutes() + remainingTime);
+    var remainingTime = 10;
+    var countDownDate = new Date();
+    countDownDate.setMinutes(countDownDate.getMinutes() + remainingTime);
 
-        var timer = setInterval(function(){
+    var timer = setInterval(function(){
 
-            var now = new Date().getTime();
-            var distance = countDownDate - now;
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
 
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("remaining-time").innerHTML = minutes + "m " + seconds + "s ";
+        document.getElementById("remaining-time").innerHTML = minutes + "m " + seconds + "s ";
 
-            if (distance < 0) {
-                clearInterval(timer);
-                document.getElementById("form_style").innerHTML = '<p>Lottery has ended</p>';
-            }
+        if (distance < 0) {
+            clearInterval(timer);
+            document.getElementById("form_style").innerHTML = '<p>Lottery has ended</p>';
+        }
 
-        },1000);
+    },1000);
 
-        var eventId = /*[[${eventId}]]*/;
-        var qrCodeImage = document.getElementById("qr-code-image");
-        qrCodeImage.src = window.location.origin + '/qr_code/image/' + eventId;
+    var eventId = /*[[${eventId}]]*/;
+    var qrCodeImage = document.getElementById("qr-code-image");
+    qrCodeImage.src = window.location.origin + '/qr_code/image/' + eventId;
 
+    var stompClient = null;
 
+    function connect() {
+        var socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe('/topic/participantCount', function (participantCount) {
+                updateParticipantCount(JSON.parse(participantCount.body));
+            });
+        });
+    }
+
+    function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+    }
+
+    function updateParticipantCount(count) {
+        var participantCountElement = document.getElementById("participantCount");
+        participantCountElement.innerHTML = count;
+        participantCountElement.style.color = getRandomColor();
+    }
+
+    connect();
 
 </script>
 </body>
