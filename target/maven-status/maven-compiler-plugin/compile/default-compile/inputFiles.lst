@@ -7,6 +7,7 @@ C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\
 C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\service\AppUserService.java
 C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\dto\response\AppUserResponse.java
 C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\dto\request\RandomOrgRequest.java
+C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\config\WebSocketConfig.java
 C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\config\AsynchronousSpringEventsConfig.java
 C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\dto\response\RandomOrgResponse.java
 C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\service\impl\AnonymizationServiceImpl.java
@@ -61,6 +62,7 @@ C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\
 C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\entity\RegistrationToken.java
 C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\controller\AuthController.java
 C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\entity\Winner.java
+C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\controller\WebSocketController.java
 C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\mapper\ParticipantMapper.java
 C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\controller\AppUserController.java
 C:\Users\dariu\IdeaProjects\jug-lottery\src\main\java\com\internship\juglottery\repository\WinnerRepo.java

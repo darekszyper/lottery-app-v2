@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.internship.juglottery.JugLotteryApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.034 s - in com.internship.juglottery.JugLotteryApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.536 s - in com.internship.juglottery.JugLotteryApplicationTests

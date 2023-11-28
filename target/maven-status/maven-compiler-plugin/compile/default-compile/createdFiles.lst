@@ -8,6 +8,7 @@ com\internship\juglottery\service\impl\RandomOrgServiceImpl.class
 com\internship\juglottery\service\AppUserService.class
 com\internship\juglottery\repository\WinnerRepo.class
 com\internship\juglottery\dto\response\FinishedLotteryResponse.class
+com\internship\juglottery\config\WebSocketConfig.class
 com\internship\juglottery\config\CustomUserDetailsService.class
 com\internship\juglottery\mapper\AppUserMapper.class
 com\internship\juglottery\dto\response\RandomOrgResponse.class
@@ -69,6 +70,7 @@ com\internship\juglottery\mapper\AppUserMapperImpl.class
 com\internship\juglottery\service\impl\EmailSenderService.class
 com\internship\juglottery\service\ParticipantService.class
 com\internship\juglottery\dto\request\VoucherRequest.class
+com\internship\juglottery\controller\WebSocketController.class
 com\internship\juglottery\entity\Lottery.class
 com\internship\juglottery\dto\response\RandomOrgResponse$RandomOrgResult$RandomData.class
 com\internship\juglottery\entity\PasswordResetToken.class

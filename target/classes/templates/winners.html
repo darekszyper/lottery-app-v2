@@ -6,7 +6,9 @@
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body>
-<canvas id="confetti"></canvas>
+<div class="full-screen-container">
+    <canvas id="confetti"></canvas>
+</div>
 <h2 class="lottery-heading">
     Winners are:
 </h2>
@@ -15,7 +17,7 @@
         <button id="go_back" onclick="window.location.href='/lottery'">Back</button>
         <div id="winners">
             <tbody th:each="winner: ${winners}">
-            <p th:text="${winner}"></p>
+            <p class="winners" th:text="${winner}"></p>
             </tbody>
         </div>
     </div>
