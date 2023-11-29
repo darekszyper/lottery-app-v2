@@ -19,7 +19,7 @@
     <form id="form_style" th:action="@{/account_management/create}" th:object="${user}" method="post">
 
         <label for="email">Email:</label>
-        <input class="modern-input" type="text" id="email" th:field="*{email}" name="email" required><br><br>
+        <input class="modern-input" type="email" id="email" th:field="*{email}" name="email" required><br><br>
 
         <label for="name">Name:</label>
         <input class="modern-input" type="text" id="name" th:field="*{name}" name="name" required><br><br>
