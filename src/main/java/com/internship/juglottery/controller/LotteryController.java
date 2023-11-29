@@ -1,7 +1,10 @@
 package com.internship.juglottery.controller;
 
 import com.internship.juglottery.dto.request.LotteryRequest;
-import com.internship.juglottery.dto.response.*;
+import com.internship.juglottery.dto.response.FinishedLotteryResponse;
+import com.internship.juglottery.dto.response.LotteryResponse;
+import com.internship.juglottery.dto.response.ParticipantResponse;
+import com.internship.juglottery.dto.response.VoucherResponse;
 import com.internship.juglottery.entity.Lottery;
 import com.internship.juglottery.entity.Voucher;
 import com.internship.juglottery.event.VouchersSentEvent;
@@ -17,7 +20,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,7 +43,6 @@ public class LotteryController {
     private final ParticipantService participantService;
     private final AppUserService appUserService;
     private final ApplicationEventPublisher eventPublisher;
-    private final SimpMessagingTemplate template;
 
     @GetMapping
     public String showUserMainPage(Model model, Principal principal) {
@@ -84,7 +85,10 @@ public class LotteryController {
             return "error/lottery_not_active";
         }
         model.addAttribute("eventId", eventId);
-        template.convertAndSend("/topic/participantCount", participantService.getConfirmedEmailCount(eventId));
+        int participantCount = participantService.getConfirmedEmailCount(eventId);
+        model.addAttribute("eventId", eventId);
+        model.addAttribute("participantCount", participantCount);
+
         return "qr_code";
     }
 

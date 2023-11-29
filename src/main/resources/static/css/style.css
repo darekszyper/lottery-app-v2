@@ -262,6 +262,10 @@ a {
     white-space: nowrap;
 }
 
+.modal-content .submit-button {
+    background-color: red;
+}
+
 .modal-content .submit-button:hover {
     background-color: darkred;
 }
