@@ -35,8 +35,8 @@ public class ParticipantController {
 
     @PostMapping
     public String registerForLottery(@ModelAttribute("participant") @Valid ParticipantRequest participantRequest,
-                                     HttpServletRequest request,
-                                     BindingResult bindingResult) {
+                                     BindingResult bindingResult,
+                                     HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             log.error("Validation error: {}", bindingResult.getAllErrors());
             return "error/participant_validation_error";
