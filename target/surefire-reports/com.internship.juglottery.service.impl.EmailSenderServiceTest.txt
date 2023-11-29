@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.internship.juglottery.service.impl.EmailSenderServiceTest
--------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.275 s - in com.internship.juglottery.service.impl.EmailSenderServiceTest
