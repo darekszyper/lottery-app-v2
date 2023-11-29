@@ -17,6 +17,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +41,7 @@ public class LotteryController {
     private final ParticipantService participantService;
     private final AppUserService appUserService;
     private final ApplicationEventPublisher eventPublisher;
+    private final SimpMessagingTemplate template;
 
     @GetMapping
     public String showUserMainPage(Model model, Principal principal) {
@@ -82,6 +84,7 @@ public class LotteryController {
             return "error/lottery_not_active";
         }
         model.addAttribute("eventId", eventId);
+        template.convertAndSend("/topic/participantCount", participantService.getConfirmedEmailCount(eventId));
         return "qr_code";
     }
 
