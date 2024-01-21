@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Error</title>
+
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+
+    <div id="column_400" th:object="${participant}">
+        <p th:if="${#fields.hasErrors('firstName')}" class="errors">
+            <span th:each="error : ${#fields.errors('firstName')}" th:text="${error}"></span>
+        </p>
+        <p th:if="${#fields.hasErrors('email')}" class="errors">
+            <span th:each="error : ${#fields.errors('email')}" th:text="${error}"></span>
+        </p>
+    </div>
+    <script>
+    function goBack() {
+    setTimeout(function(){
+    history.back();
+    }, 4000);
+    };
+
+    window.onload = function(){
+    goBack();
+    };
+    </script>
+
+</body>
+</html>

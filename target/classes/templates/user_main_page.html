@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Main Page</title>
+
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2 class="lottery-heading">
+    Lottery management
+</h2>
+<div id="column_400">
+    <div id="form_style_ap">
+        <form action="/lottery/qr_code" method="GET">
+            <select name="eventId">
+                <tbody th:each="lottery: ${lotteries}">
+                <option th:value="${lottery.id}" th:text="${lottery.eventName}" name="lottery"></option>
+                </tbody>
+            </select>
+            <input type="submit" value="Start Event" th:disabled="${lotteries.empty}">
+        </form>
+
+        <div class="button">
+            <a href="/lottery/create">Create new lottery</a>
+        </div>
+
+        <div class="button">
+            <a href="/voucher/create">Create new voucher</a>
+        </div>
+        <div class="button">
+            <a href="/lottery/manage">Edit lottery</a>
+        </div>
+        <div class="button">
+            <a href="/lottery/previous_winners">Previous winners</a>
+        </div>
+        <div class="greyButton">
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

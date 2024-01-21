@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QR Code</title>
+
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+</head>
+<body>
+<h2 class="lottery-heading">
+    Scan the QR code
+</h2>
+<div id="column_400">
+    <div id="form_style">
+        <div id="qr-code-frame">
+            <img id="qr-code-image" alt="QR Code">
+        </div>
+        <div class="margin-top-ten">
+            Participants with confirmed Emails: <span id="participantCount" th:text="${participantCount}">0</span>
+        </div>
+        <div id="timer">
+            <p>Remaining time to register:</p>
+            <p id="remaining-time"></p>
+        </div>
+    </div>
+    <button class="blue-button" onclick="showFinishLotteryConfirmation()">Finish lottery and show winners</button>
+</div>
+
+<div id="finishLotteryConfirmationModal" class="modal">
+    <div class="modal-content">
+        <p>Are you sure you want to finish the lottery and display the winners?</p>
+        <form th:action="@{/lottery/winners/{eventId}(eventId=${eventId})}" method="post">
+            <button class="submit-button-blue" type="submit">Yes, finish lottery</button>
+            <button class="cancel-button" type="button" onclick="closeFinishLotteryConfirmation()">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
+
+<script th:inline="javascript">
+            function showFinishLotteryConfirmation() {
+        document.getElementById("finishLotteryConfirmationModal").style.display = 'flex';
+    }
+
+    function closeFinishLotteryConfirmation() {
+        document.getElementById("finishLotteryConfirmationModal").style.display = 'none';
+    }
+
+    var remainingTime = 10;
+    var countDownDate = new Date();
+    countDownDate.setMinutes(countDownDate.getMinutes() + remainingTime);
+
+    var timer = setInterval(function(){
+
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("remaining-time").innerHTML = minutes + "m " + seconds + "s ";
+
+        if (distance < 0) {
+            clearInterval(timer);
+            document.getElementById("form_style").innerHTML = '<p>Lottery has ended</p>';
+        }
+
+    },1000);
+
+    var eventId = /*[[${eventId}]]*/;
+    var qrCodeImage = document.getElementById("qr-code-image");
+    qrCodeImage.src = window.location.origin + '/qr_code/image/' + eventId;
+
+    var stompClient = null;
+
+    function connect() {
+        var socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe('/topic/participantCount', function (participantCount) {
+                updateParticipantCount(JSON.parse(participantCount.body));
+            });
+        });
+    }
+
+    function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+    }
+
+    function updateParticipantCount(count) {
+        var participantCountElement = document.getElementById("participantCount");
+        participantCountElement.innerHTML = count;
+        participantCountElement.style.color = getRandomColor();
+    }
+
+    connect();
+
+</script>
+</body>
+</html>

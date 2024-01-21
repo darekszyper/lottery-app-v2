@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>New Event</title>
+
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2 class="lottery-heading">
+    Create new event
+</h2>
+<div id="column_400">
+
+    <button id="go_back" onclick="window.location.href='/lottery'">Back</button>
+
+    <form id="form_style" th:action="@{/lottery/create}" th:object="${lottery}" method="post">
+
+        <label for="event_name" class="otherLabels">Event name:</label>
+        <input class="modern-input" type="text" id="event_name" th:field="*{eventName}" name="event_name" required><br><br>
+
+        <label for="city" class="otherLabels">City:</label>
+        <input class="modern-input" type="text" id="city" th:field="*{city}" name="city" required><br><br>
+
+        <label class="otherLabels">Choose vouchers:</label><br>
+        <div th:each="voucher : ${vouchers}">
+            <input type="checkbox" th:field="*{voucherId}" th:value="${voucher.id}" id="checkboxInline"/>
+            <label th:text="${voucher.voucherName}" id="labelInline"></label><br>
+        </div>
+        <input type="submit" value="Create event">
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+com\internship\juglottery\service\LotteryServiceTest.class
+com\internship\juglottery\service\QRServiceTest.class
+com\internship\juglottery\service\RandomizeServiceTest.class
+com\internship\juglottery\JugLotteryApplicationTests.class
+com\internship\juglottery\service\impl\EmailSendingIntegrationTests.class
+com\internship\juglottery\service\AnonymizationServiceTest.class
+com\internship\juglottery\service\impl\EmailSenderServiceTest.class
+com\internship\juglottery\service\ParticipantServiceTest.class
+com\internship\juglottery\service\AppUserServiceTest.class
+com\internship\juglottery\service\impl\PasswordServiceImplTest.class
+com\internship\juglottery\service\VoucherServiceTest.class
