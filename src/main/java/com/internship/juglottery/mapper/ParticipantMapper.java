@@ -20,6 +20,14 @@ public abstract class ParticipantMapper {
     @Mapping(source = "lotteryId", target = "lottery.id")
     public abstract Participant mapParticipantRequestToParticipant(ParticipantRequest participantRequest);
 
+    /**
+     * Registration for lottery confirmation email
+     */
+    @AfterMapping
+    protected void setConfirmedEmail(@MappingTarget Participant participant) {
+        participant.setEmailConfirmed(true);
+    }
+
     @Mapping(source = "participant.firstName", target = "firstName")
     @Mapping(source = "participant.email", target = "email")
     public abstract ParticipantResponse mapToParticipantResponse(Winner winner);

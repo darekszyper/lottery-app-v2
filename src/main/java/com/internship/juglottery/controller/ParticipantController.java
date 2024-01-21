@@ -15,8 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @Controller
 @RequestMapping("register")
 @RequiredArgsConstructor
@@ -46,17 +44,24 @@ public class ParticipantController {
             return "error/participant_validation_error";
         }
 
+        /**
+         * Registration for lottery confirmation email
+         */
+        /*
         String token = UUID.randomUUID().toString();
         String hostName = request.getRequestURL().toString();
+         */
         try {
             Participant participantEntity = participantMapper.mapParticipantRequestToParticipant(participantRequest);
-            participantService.addParticipant(hostName, token, participantEntity);
+            // participantService.addParticipant(hostName, token, participantEntity);
+            participantService.addParticipant("hostName", "token", participantEntity);
         } catch (LotteryNotActiveException exception) {
             log.error(exception.getMessage());
             return "error/lottery_not_active";
         }
 
-        return "success/participant_registration_success";
+        //return "success/participant_registration_success";
+        return "success/registration_email_confirmation_success";
     }
 
     @GetMapping("/confirm_email")
