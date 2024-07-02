@@ -3,12 +3,14 @@ package com.szyperek.lottery.mapper;
 import com.szyperek.lottery.dto.request.VoucherRequest;
 import com.szyperek.lottery.dto.response.VoucherResponse;
 import com.szyperek.lottery.entity.Voucher;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.springframework.stereotype.Service;
 
-@Mapper(componentModel = "spring")
-public interface VoucherMapper {
-    @Mapping(source = "userId", target = "appUser.id")
-    Voucher mapToEntity (VoucherRequest voucherRequest);
-    VoucherResponse mapToVoucherResponse(Voucher voucher);
+@Service
+public class VoucherMapper {
+    public Voucher mapToEntity (VoucherRequest voucherRequest) {
+        return null;
+    }
+    public VoucherResponse mapToVoucherResponse(Voucher voucher) {
+        return null;
+    }
 }

@@ -2,10 +2,15 @@ package com.szyperek.lottery.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "voucher")
@@ -36,5 +41,33 @@ public class Voucher {
     public Voucher(String activationCode, LocalDate expirationDate) {
         this.activationCode = activationCode;
         this.expirationDate = expirationDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Voucher voucher = (Voucher) o;
+
+        if (!Objects.equals(id, voucher.id)) return false;
+        if (!Objects.equals(voucherName, voucher.voucherName)) return false;
+        if (!Objects.equals(activationCode, voucher.activationCode))
+            return false;
+        if (!Objects.equals(expirationDate, voucher.expirationDate))
+            return false;
+        if (!Objects.equals(lottery, voucher.lottery)) return false;
+        return Objects.equals(appUser, voucher.appUser);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (voucherName != null ? voucherName.hashCode() : 0);
+        result = 31 * result + (activationCode != null ? activationCode.hashCode() : 0);
+        result = 31 * result + (expirationDate != null ? expirationDate.hashCode() : 0);
+        result = 31 * result + (lottery != null ? lottery.hashCode() : 0);
+        result = 31 * result + (appUser != null ? appUser.hashCode() : 0);
+        return result;
     }
 }

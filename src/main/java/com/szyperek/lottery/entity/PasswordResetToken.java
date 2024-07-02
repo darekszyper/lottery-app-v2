@@ -2,10 +2,15 @@ package com.szyperek.lottery.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "password_reset_token")
@@ -28,6 +33,28 @@ public class PasswordResetToken {
         this.token = token;
         this.user = user;
         this.expiryDate = expiryDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PasswordResetToken that = (PasswordResetToken) o;
+
+        if (!Objects.equals(id, that.id)) return false;
+        if (!Objects.equals(token, that.token)) return false;
+        if (!Objects.equals(user, that.user)) return false;
+        return Objects.equals(expiryDate, that.expiryDate);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (token != null ? token.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (expiryDate != null ? expiryDate.hashCode() : 0);
+        return result;
     }
 }
 
