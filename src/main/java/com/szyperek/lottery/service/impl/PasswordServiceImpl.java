@@ -58,7 +58,12 @@ public class PasswordServiceImpl {
     public void createPasswordResetTokenForUser(AppUser appUser, String token) {
         Optional<PasswordResetToken> oldToken = passwordTokenRepo.findByUser(appUser);
         oldToken.ifPresent(passwordTokenRepo::delete);
-        PasswordResetToken myToken = new PasswordResetToken(token, appUser, LocalDateTime.now().plusHours(24));
+
+        PasswordResetToken myToken = new PasswordResetToken();
+        myToken.setToken(token);
+        myToken.setUser(appUser);
+        myToken.setExpiryDate(LocalDateTime.now().plusHours(24));
+
         passwordTokenRepo.save(myToken);
     }
 

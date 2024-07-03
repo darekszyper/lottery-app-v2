@@ -10,7 +10,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "app_user")
@@ -21,17 +20,17 @@ public class AppUser {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     Role role;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -40,26 +39,13 @@ public class AppUser {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         AppUser appUser = (AppUser) o;
-
-        if (!Objects.equals(id, appUser.id)) return false;
-        if (!Objects.equals(email, appUser.email)) return false;
-        if (!Objects.equals(name, appUser.name)) return false;
-        if (!Objects.equals(password, appUser.password)) return false;
-        if (role != appUser.role) return false;
-        return Objects.equals(passwordResetToken, appUser.passwordResetToken);
+        return getId() != null && Objects.equals(getId(), appUser.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + (passwordResetToken != null ? passwordResetToken.hashCode() : 0);
-        return result;
+        return getClass().hashCode();
     }
 }

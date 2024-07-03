@@ -119,13 +119,16 @@ class LotteryServiceTest {
         vouchers.add(voucher1);
         vouchers.add(voucher2);
 
-        Lottery lottery = new Lottery(lotteryId, "Lottery1",
-                "Bialystok",
-                LocalDate.of(2023, 8, 8),
-                Status.ACTIVE,
-                participants,
-                vouchers,
-                appUser);
+        Lottery lottery = new Lottery();
+        lottery.setId(lotteryId);
+        lottery.setEventName("Lottery1");
+        lottery.setCity("Bialystok");
+        lottery.setLotteryDate(LocalDate.of(2023, 8, 8));
+        lottery.setStatus(Status.ACTIVE);
+        lottery.setParticipants(participants);
+        lottery.setVouchers(vouchers);
+        lottery.setAppUser(appUser);
+
 
         List<Winner> winners1 = new ArrayList<>();
         winners1.add(new Winner(participant1, voucher1, lottery));

@@ -10,7 +10,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "password_reset_token")
@@ -20,41 +19,27 @@ public class PasswordResetToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "token", nullable = false)
     private String token;
 
     @OneToOne(targetEntity = AppUser.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private AppUser user;
 
-    @Column(name = "expiry_date")
+    @Column(name = "expiry_date", nullable = false)
     private LocalDateTime expiryDate;
-
-    public PasswordResetToken(String token, AppUser user, LocalDateTime expiryDate) {
-        this.token = token;
-        this.user = user;
-        this.expiryDate = expiryDate;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         PasswordResetToken that = (PasswordResetToken) o;
-
-        if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(token, that.token)) return false;
-        if (!Objects.equals(user, that.user)) return false;
-        return Objects.equals(expiryDate, that.expiryDate);
+        return getId() != null && Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (token != null ? token.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
-        result = 31 * result + (expiryDate != null ? expiryDate.hashCode() : 0);
-        return result;
+        return getClass().hashCode();
     }
 }
 

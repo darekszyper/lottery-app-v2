@@ -10,7 +10,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "participant")
@@ -21,16 +20,16 @@ public class Participant {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "is_email_confirmed")
+    @Column(name = "is_email_confirmed", nullable = false)
     private boolean isEmailConfirmed;
 
-    @JoinColumn(name = "lottery_id")
+    @JoinColumn(name = "lottery_id", nullable = false)
     @ManyToOne
     private Lottery lottery;
 
@@ -42,24 +41,13 @@ public class Participant {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Participant that = (Participant) o;
-
-        if (isEmailConfirmed != that.isEmailConfirmed) return false;
-        if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(firstName, that.firstName)) return false;
-        if (!Objects.equals(email, that.email)) return false;
-        return Objects.equals(lottery, that.lottery);
+        return getId() != null && Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (isEmailConfirmed ? 1 : 0);
-        result = 31 * result + (lottery != null ? lottery.hashCode() : 0);
-        return result;
+        return getClass().hashCode();
     }
 }

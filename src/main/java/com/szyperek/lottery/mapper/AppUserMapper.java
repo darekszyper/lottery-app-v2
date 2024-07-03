@@ -5,14 +5,12 @@ import com.szyperek.lottery.dto.response.AppUserResponse;
 import com.szyperek.lottery.entity.AppUser;
 import com.szyperek.lottery.entity.enums.Role;
 import com.szyperek.lottery.service.impl.PasswordServiceImpl;
-import org.mapstruct.BeforeMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public abstract class AppUserMapper {
+@Component
+public class AppUserMapper {
 
     private final Role USER_ROLE = Role.USER;
 
@@ -22,12 +20,40 @@ public abstract class AppUserMapper {
     @Autowired
     private PasswordServiceImpl passwordServiceImpl;
 
-    public abstract AppUserResponse toResponse(AppUser appUser);
+    public AppUserResponse toResponse(AppUser appUser) {
+        if (appUser == null) {
+            return null;
+        }
 
-    public abstract AppUser toEntity(AppUserRequest appUserRequest);
+        Long id = null;
+        String email = null;
+        String name = null;
 
-    @BeforeMapping
-    protected void setUserRoleAndEncodePassword(@MappingTarget AppUser appUser) {
+        id = appUser.getId();
+        email = appUser.getEmail();
+        name = appUser.getName();
+
+        AppUserResponse appUserResponse = new AppUserResponse(id, email, name);
+
+        return appUserResponse;
+    }
+
+    public AppUser toEntity(AppUserRequest appUserRequest) {
+        if (appUserRequest == null) {
+            return null;
+        }
+
+        AppUser appUser = new AppUser();
+
+        setUserRoleAndEncodePassword(appUser);
+
+        appUser.setEmail(appUserRequest.getEmail());
+        appUser.setName(appUserRequest.getName());
+
+        return appUser;
+    }
+
+    protected void setUserRoleAndEncodePassword(AppUser appUser) {
         String generatedPassword = passwordServiceImpl.generatePassword();
         appUser.setPassword(passwordEncoder.encode(generatedPassword));
         appUser.setRole(USER_ROLE);

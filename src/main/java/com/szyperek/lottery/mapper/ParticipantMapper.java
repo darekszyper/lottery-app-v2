@@ -2,38 +2,98 @@ package com.szyperek.lottery.mapper;
 
 import com.szyperek.lottery.dto.request.ParticipantRequest;
 import com.szyperek.lottery.dto.response.ParticipantResponse;
+import com.szyperek.lottery.entity.Lottery;
 import com.szyperek.lottery.entity.Participant;
 import com.szyperek.lottery.entity.Winner;
 import com.szyperek.lottery.service.AnonymizationService;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public abstract class ParticipantMapper {
+@Component
+public class ParticipantMapper {
 
     @Autowired
     private AnonymizationService anonymizationService;
 
-    @Mapping(source = "lotteryId", target = "lottery.id")
-    public abstract Participant mapParticipantRequestToParticipant(ParticipantRequest participantRequest);
+    public Participant mapParticipantRequestToParticipant(ParticipantRequest participantRequest) {
+        if (participantRequest == null) {
+            return null;
+        }
 
-    /**
-     * Registration for lottery confirmation email
-     */
-    @AfterMapping
-    protected void setConfirmedEmail(@MappingTarget Participant participant) {
+        Participant participant = new Participant();
+
+        participant.setLottery(participantRequestToLottery(participantRequest));
+        participant.setFirstName(participantRequest.getFirstName());
+        participant.setEmail(participantRequest.getEmail());
+
+        setConfirmedEmail(participant);
+
+        return participant;
+    }
+
+    public ParticipantResponse mapToParticipantResponse(Winner winner) {
+        if (winner == null) {
+            return null;
+        }
+
+        ParticipantResponse participantResponse = new ParticipantResponse();
+
+        participantResponse.setFirstName(winnerParticipantFirstName(winner));
+        participantResponse.setEmail(winnerParticipantEmail(winner));
+        participantResponse.setId(winner.getId());
+
+        anonymizeEmail(participantResponse, winner);
+
+        return participantResponse;
+    }
+
+    protected Lottery participantRequestToLottery(ParticipantRequest participantRequest) {
+        if (participantRequest == null) {
+            return null;
+        }
+
+        Lottery lottery = new Lottery();
+
+        lottery.setId(participantRequest.getLotteryId());
+
+        return lottery;
+    }
+
+    private String winnerParticipantFirstName(Winner winner) {
+        if (winner == null) {
+            return null;
+        }
+        Participant participant = winner.getParticipant();
+        if (participant == null) {
+            return null;
+        }
+        String firstName = participant.getFirstName();
+        if (firstName == null) {
+            return null;
+        }
+        return firstName;
+    }
+
+    private String winnerParticipantEmail(Winner winner) {
+        if (winner == null) {
+            return null;
+        }
+        Participant participant = winner.getParticipant();
+        if (participant == null) {
+            return null;
+        }
+        String email = participant.getEmail();
+        if (email == null) {
+            return null;
+        }
+        return email;
+    }
+
+    protected void setConfirmedEmail(Participant participant) {
         participant.setEmailConfirmed(true);
     }
 
-    @Mapping(source = "participant.firstName", target = "firstName")
-    @Mapping(source = "participant.email", target = "email")
-    public abstract ParticipantResponse mapToParticipantResponse(Winner winner);
-
-    @AfterMapping
-    protected void anonymizeEmail(@MappingTarget ParticipantResponse participantResponse, Winner winner) {
+    protected void anonymizeEmail(ParticipantResponse participantResponse, Winner winner) {
         participantResponse.setEmail(anonymizationService.anonymizeEmail(winner.getParticipant().getEmail()));
     }
 }

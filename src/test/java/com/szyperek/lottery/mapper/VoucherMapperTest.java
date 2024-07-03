@@ -1,17 +1,13 @@
 package com.szyperek.lottery.mapper;
 
 import com.szyperek.lottery.dto.request.VoucherRequest;
-import com.szyperek.lottery.entity.AppUser;
-import com.szyperek.lottery.entity.Lottery;
 import com.szyperek.lottery.entity.Voucher;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-
 import static com.szyperek.lottery.mapper.MapperTestUtils.getVoucher;
 import static com.szyperek.lottery.mapper.MapperTestUtils.getVoucherRequest;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class VoucherMapperTest {
 
@@ -29,9 +25,9 @@ class VoucherMapperTest {
         Voucher voucher = getVoucher();
 
         // when
-        systemUnderTest.mapToEntity(voucherRequest);
+        Voucher result = systemUnderTest.mapToEntity(voucherRequest);
 
         // then
-
+        assertNotNull(result);
     }
 }

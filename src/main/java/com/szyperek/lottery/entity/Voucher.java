@@ -10,7 +10,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "voucher")
@@ -21,13 +20,13 @@ public class Voucher {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "voucher_name")
+    @Column(name = "voucher_name", nullable = false)
     private String voucherName;
 
-    @Column(name = "activation_code")
+    @Column(name = "activation_code", nullable = false)
     private String activationCode;
 
-    @Column(name = "expiration_date")
+    @Column(name = "expiration_date", nullable = false)
     private LocalDate expirationDate;
 
     @ManyToOne
@@ -35,7 +34,7 @@ public class Voucher {
     private Lottery lottery;
 
     @ManyToOne
-    @JoinColumn(name = "app_user_id")
+    @JoinColumn(name = "app_user_id", nullable = false)
     private AppUser appUser;
 
     public Voucher(String activationCode, LocalDate expirationDate) {
@@ -46,28 +45,13 @@ public class Voucher {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Voucher voucher = (Voucher) o;
-
-        if (!Objects.equals(id, voucher.id)) return false;
-        if (!Objects.equals(voucherName, voucher.voucherName)) return false;
-        if (!Objects.equals(activationCode, voucher.activationCode))
-            return false;
-        if (!Objects.equals(expirationDate, voucher.expirationDate))
-            return false;
-        if (!Objects.equals(lottery, voucher.lottery)) return false;
-        return Objects.equals(appUser, voucher.appUser);
+        return getId() != null && Objects.equals(getId(), voucher.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (voucherName != null ? voucherName.hashCode() : 0);
-        result = 31 * result + (activationCode != null ? activationCode.hashCode() : 0);
-        result = 31 * result + (expirationDate != null ? expirationDate.hashCode() : 0);
-        result = 31 * result + (lottery != null ? lottery.hashCode() : 0);
-        result = 31 * result + (appUser != null ? appUser.hashCode() : 0);
-        return result;
+        return getClass().hashCode();
     }
 }

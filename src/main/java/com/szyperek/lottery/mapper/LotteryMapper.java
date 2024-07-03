@@ -1,31 +1,155 @@
 package com.szyperek.lottery.mapper;
 
 import com.szyperek.lottery.dto.request.LotteryRequest;
-import com.szyperek.lottery.dto.response.FinishedLotteryResponse;
-import com.szyperek.lottery.dto.response.LotteryResponse;
-import com.szyperek.lottery.entity.Lottery;
+import com.szyperek.lottery.dto.response.*;
+import com.szyperek.lottery.entity.*;
 import com.szyperek.lottery.entity.enums.Status;
-import org.mapstruct.*;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public abstract class LotteryMapper {
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-    public abstract LotteryResponse mapToResponse(Lottery lottery);
+@Component
+public class LotteryMapper {
 
-    @Mapping(source = "userId", target = "appUser.id")
-    public abstract Lottery mapToEntity(LotteryRequest lotteryRequest);
+    public LotteryResponse mapToResponse(Lottery lottery) {
+        if (lottery == null) {
+            return null;
+        }
 
+        Long id = null;
+        String eventName = null;
 
-    public abstract FinishedLotteryResponse mapToFinishedLotteryResponse(Lottery lottery);
+        id = lottery.getId();
+        eventName = lottery.getEventName();
 
-    @BeforeMapping
-    protected void setNotActiveStatus(@MappingTarget Lottery lottery) {
+        LotteryResponse lotteryResponse = new LotteryResponse(id, eventName);
+
+        return lotteryResponse;
+    }
+
+    public Lottery mapToEntity(LotteryRequest lotteryRequest) {
+        if (lotteryRequest == null) {
+            return null;
+        }
+
+        Lottery lottery = new Lottery();
+
+        setNotActiveStatus(lottery);
+
+        lottery.setAppUser(lotteryRequestToAppUser(lotteryRequest));
+        lottery.setEventName(lotteryRequest.getEventName());
+        lottery.setCity(lotteryRequest.getCity());
+
+        setVoucherListToNull(lottery);
+
+        return lottery;
+    }
+
+    public FinishedLotteryResponse mapToFinishedLotteryResponse(Lottery lottery) {
+        if (lottery == null) {
+            return null;
+        }
+
+        Long id = null;
+        String eventName = null;
+        List<WinnerResponse> winners = null;
+        LocalDate lotteryDate = null;
+        String city = null;
+
+        id = lottery.getId();
+        eventName = lottery.getEventName();
+        winners = winnerListToWinnerResponseList(lottery.getWinners());
+        lotteryDate = lottery.getLotteryDate();
+        city = lottery.getCity();
+
+        FinishedLotteryResponse finishedLotteryResponse = new FinishedLotteryResponse(id, eventName, winners, lotteryDate, city);
+
+        return finishedLotteryResponse;
+    }
+
+    protected AppUser lotteryRequestToAppUser(LotteryRequest lotteryRequest) {
+        if (lotteryRequest == null) {
+            return null;
+        }
+
+        AppUser appUser = new AppUser();
+
+        appUser.setId(lotteryRequest.getUserId());
+
+        return appUser;
+    }
+
+    protected ParticipantResponse participantToParticipantResponse(Participant participant) {
+        if (participant == null) {
+            return null;
+        }
+
+        ParticipantResponse participantResponse = new ParticipantResponse();
+
+        participantResponse.setId(participant.getId());
+        participantResponse.setFirstName(participant.getFirstName());
+        participantResponse.setEmail(participant.getEmail());
+
+        return participantResponse;
+    }
+
+    protected VoucherResponse voucherToVoucherResponse(Voucher voucher) {
+        if (voucher == null) {
+            return null;
+        }
+
+        Long id = null;
+        String voucherName = null;
+        String activationCode = null;
+        LocalDate expirationDate = null;
+
+        id = voucher.getId();
+        voucherName = voucher.getVoucherName();
+        activationCode = voucher.getActivationCode();
+        expirationDate = voucher.getExpirationDate();
+
+        VoucherResponse voucherResponse = new VoucherResponse(id, voucherName, activationCode, expirationDate);
+
+        return voucherResponse;
+    }
+
+    protected WinnerResponse winnerToWinnerResponse(Winner winner) {
+        if (winner == null) {
+            return null;
+        }
+
+        ParticipantResponse participant = null;
+        VoucherResponse voucher = null;
+
+        participant = participantToParticipantResponse(winner.getParticipant());
+        voucher = voucherToVoucherResponse(winner.getVoucher());
+
+        WinnerResponse winnerResponse = new WinnerResponse(participant, voucher);
+
+        return winnerResponse;
+    }
+
+    protected List<WinnerResponse> winnerListToWinnerResponseList(List<Winner> list) {
+        if (list == null) {
+            return null;
+        }
+
+        List<WinnerResponse> list1 = new ArrayList<WinnerResponse>(list.size());
+        for (Winner winner : list) {
+            list1.add(winnerToWinnerResponse(winner));
+        }
+
+        return list1;
+    }
+
+    protected void setNotActiveStatus(Lottery lottery) {
         lottery.setStatus(Status.NOT_ACTIVE);
     }
 
-    @AfterMapping
-    protected void setVoucherListToNull(@MappingTarget Lottery lottery) {
-       lottery.setVouchers(null);
+    protected void setVoucherListToNull(Lottery lottery) {
+        lottery.setVouchers(null);
     }
 }
 

@@ -9,7 +9,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "winner")
@@ -21,14 +20,14 @@ public class Winner {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "participant_id")
+    @JoinColumn(name = "participant_id", nullable = false)
     private Participant participant;
 
     @OneToOne
-    @JoinColumn(name = "voucher_id")
+    @JoinColumn(name = "voucher_id", nullable = false)
     private Voucher voucher;
 
-    @JoinColumn(name = "lottery_id")
+    @JoinColumn(name = "lottery_id", nullable = false)
     @ManyToOne
     private Lottery lottery;
 
@@ -41,22 +40,13 @@ public class Winner {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Winner winner = (Winner) o;
-
-        if (!Objects.equals(id, winner.id)) return false;
-        if (!Objects.equals(participant, winner.participant)) return false;
-        if (!Objects.equals(voucher, winner.voucher)) return false;
-        return Objects.equals(lottery, winner.lottery);
+        return getId() != null && Objects.equals(getId(), winner.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (participant != null ? participant.hashCode() : 0);
-        result = 31 * result + (voucher != null ? voucher.hashCode() : 0);
-        result = 31 * result + (lottery != null ? lottery.hashCode() : 0);
-        return result;
+        return getClass().hashCode();
     }
 }

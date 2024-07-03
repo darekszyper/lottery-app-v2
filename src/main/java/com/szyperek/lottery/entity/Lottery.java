@@ -2,19 +2,18 @@ package com.szyperek.lottery.entity;
 
 import com.szyperek.lottery.entity.enums.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "lottery")
@@ -25,62 +24,44 @@ public class Lottery {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "event_name")
+    @Column(name = "event_name", nullable = false)
     private String eventName;
-
-    @Column(name = "city")
-    private String city;
 
     @Column(name = "lottery_date")
     private LocalDate lotteryDate;
 
+    @Column(name = "city", nullable = false)
+    private String city;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private Status status;
 
     @OneToMany(mappedBy = "lottery")
-    List<Participant> participants;
+    @ToString.Exclude
+    List<Participant> participants = new ArrayList<>();
 
     @OneToMany(mappedBy = "lottery")
-    List<Voucher> vouchers;
+    @ToString.Exclude
+    List<Voucher> vouchers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "lottery", fetch = FetchType.EAGER)
-    List<Winner> winners;
+    @OneToMany(mappedBy = "lottery", fetch = FetchType.EAGER) // TODO: check if eager is needed
+    List<Winner> winners = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "app_user_id")
+    @JoinColumn(name = "app_user_id", nullable = false)
     private AppUser appUser;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Lottery lottery = (Lottery) o;
-
-        if (!Objects.equals(id, lottery.id)) return false;
-        if (!Objects.equals(eventName, lottery.eventName)) return false;
-        if (!Objects.equals(city, lottery.city)) return false;
-        if (!Objects.equals(lotteryDate, lottery.lotteryDate)) return false;
-        if (status != lottery.status) return false;
-        if (!Objects.equals(participants, lottery.participants))
-            return false;
-        if (!Objects.equals(vouchers, lottery.vouchers)) return false;
-        if (!Objects.equals(winners, lottery.winners)) return false;
-        return Objects.equals(appUser, lottery.appUser);
+        return getId() != null && Objects.equals(getId(), lottery.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (eventName != null ? eventName.hashCode() : 0);
-        result = 31 * result + (city != null ? city.hashCode() : 0);
-        result = 31 * result + (lotteryDate != null ? lotteryDate.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (participants != null ? participants.hashCode() : 0);
-        result = 31 * result + (vouchers != null ? vouchers.hashCode() : 0);
-        result = 31 * result + (winners != null ? winners.hashCode() : 0);
-        result = 31 * result + (appUser != null ? appUser.hashCode() : 0);
-        return result;
+        return getClass().hashCode();
     }
 }
