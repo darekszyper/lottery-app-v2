@@ -4,6 +4,7 @@ import com.szyperek.lottery.dto.request.VoucherRequest;
 import com.szyperek.lottery.dto.response.VoucherResponse;
 import com.szyperek.lottery.entity.Voucher;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.szyperek.lottery.mapper.MapperTestUtils.*;
@@ -19,6 +20,7 @@ class VoucherMapperTest {
     }
 
     @Test
+    @DisplayName("Should map VoucherRequest to Voucher")
     void shouldMapVoucherRequestToVoucher() {
         // given
         VoucherRequest voucherRequest = getBasicVoucherRequest();
@@ -36,6 +38,7 @@ class VoucherMapperTest {
     }
 
     @Test
+    @DisplayName("Should return null when VoucherRequest is null")
     void shouldReturnNullWhenVoucherRequestIsNull() {
         // when
         Voucher result = voucherMapper.mapToEntity(null);
@@ -45,6 +48,7 @@ class VoucherMapperTest {
     }
 
     @Test
+    @DisplayName("Should map Voucher to VoucherResponse")
     void shouldMapVoucherToVoucherResponse() {
         // given
         Voucher voucher = getBasicVoucher();
@@ -61,6 +65,7 @@ class VoucherMapperTest {
     }
 
     @Test
+    @DisplayName("Should return null when Voucher is null")
     void shouldReturnNullWhenVoucherIsNull() {
         // when
         VoucherResponse result = voucherMapper.mapToVoucherResponse(null);

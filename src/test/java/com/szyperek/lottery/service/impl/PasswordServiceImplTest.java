@@ -85,7 +85,7 @@ class PasswordServiceImplTest {
     }
 
     @Test
-    @DisplayName("should return 'expired' when token date is expired")
+    @DisplayName("Should return 'expired' when token date is expired")
     void shouldReturnExpired() {
         //given
         String token = "expired";

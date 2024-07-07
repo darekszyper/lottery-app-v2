@@ -6,14 +6,14 @@ import com.szyperek.lottery.entity.Lottery;
 import com.szyperek.lottery.entity.Participant;
 import com.szyperek.lottery.entity.Winner;
 import com.szyperek.lottery.service.AnonymizationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+@RequiredArgsConstructor
 @Component
 public class ParticipantMapper {
 
-    @Autowired
-    private AnonymizationService anonymizationService;
+    private final AnonymizationService anonymizationService;
 
     public Participant mapParticipantRequestToParticipant(ParticipantRequest participantRequest) {
         if (participantRequest == null) {
@@ -47,7 +47,7 @@ public class ParticipantMapper {
         return participantResponse;
     }
 
-    protected Lottery participantRequestToLottery(ParticipantRequest participantRequest) {
+    private Lottery participantRequestToLottery(ParticipantRequest participantRequest) {
         if (participantRequest == null) {
             return null;
         }
@@ -67,11 +67,7 @@ public class ParticipantMapper {
         if (participant == null) {
             return null;
         }
-        String firstName = participant.getFirstName();
-        if (firstName == null) {
-            return null;
-        }
-        return firstName;
+        return participant.getFirstName();
     }
 
     private String winnerParticipantEmail(Winner winner) {
@@ -82,18 +78,14 @@ public class ParticipantMapper {
         if (participant == null) {
             return null;
         }
-        String email = participant.getEmail();
-        if (email == null) {
-            return null;
-        }
-        return email;
+        return participant.getEmail();
     }
 
-    protected void setConfirmedEmail(Participant participant) {
+    private void setConfirmedEmail(Participant participant) {
         participant.setEmailConfirmed(true);
     }
 
-    protected void anonymizeEmail(ParticipantResponse participantResponse, Winner winner) {
+    private void anonymizeEmail(ParticipantResponse participantResponse, Winner winner) {
         participantResponse.setEmail(anonymizationService.anonymizeEmail(winner.getParticipant().getEmail()));
     }
 }

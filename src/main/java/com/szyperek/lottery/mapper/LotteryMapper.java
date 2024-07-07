@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -18,15 +19,10 @@ public class LotteryMapper {
             return null;
         }
 
-        Long id = null;
-        String eventName = null;
+        Long id = lottery.getId();
+        String eventName = lottery.getEventName();
 
-        id = lottery.getId();
-        eventName = lottery.getEventName();
-
-        LotteryResponse lotteryResponse = new LotteryResponse(id, eventName);
-
-        return lotteryResponse;
+        return new LotteryResponse(id, eventName);
     }
 
     public Lottery mapToEntity(LotteryRequest lotteryRequest) {
@@ -52,24 +48,16 @@ public class LotteryMapper {
             return null;
         }
 
-        Long id = null;
-        String eventName = null;
-        List<WinnerResponse> winners = null;
-        LocalDate lotteryDate = null;
-        String city = null;
+        Long id = lottery.getId();
+        String eventName = lottery.getEventName();
+        List<WinnerResponse> winners = winnerListToWinnerResponseList(lottery.getWinners());
+        LocalDate lotteryDate = lottery.getLotteryDate();
+        String city = lottery.getCity();
 
-        id = lottery.getId();
-        eventName = lottery.getEventName();
-        winners = winnerListToWinnerResponseList(lottery.getWinners());
-        lotteryDate = lottery.getLotteryDate();
-        city = lottery.getCity();
-
-        FinishedLotteryResponse finishedLotteryResponse = new FinishedLotteryResponse(id, eventName, winners, lotteryDate, city);
-
-        return finishedLotteryResponse;
+        return new FinishedLotteryResponse(id, eventName, winners, lotteryDate, city);
     }
 
-    protected AppUser lotteryRequestToAppUser(LotteryRequest lotteryRequest) {
+    private AppUser lotteryRequestToAppUser(LotteryRequest lotteryRequest) {
         if (lotteryRequest == null) {
             return null;
         }
@@ -81,7 +69,7 @@ public class LotteryMapper {
         return appUser;
     }
 
-    protected ParticipantResponse participantToParticipantResponse(Participant participant) {
+    private ParticipantResponse participantToParticipantResponse(Participant participant) {
         if (participant == null) {
             return null;
         }
@@ -95,48 +83,36 @@ public class LotteryMapper {
         return participantResponse;
     }
 
-    protected VoucherResponse voucherToVoucherResponse(Voucher voucher) {
+    private VoucherResponse voucherToVoucherResponse(Voucher voucher) {
         if (voucher == null) {
             return null;
         }
 
-        Long id = null;
-        String voucherName = null;
-        String activationCode = null;
-        LocalDate expirationDate = null;
+        Long id = voucher.getId();
+        String voucherName = voucher.getVoucherName();
+        String activationCode = voucher.getActivationCode();
+        LocalDate expirationDate = voucher.getExpirationDate();
 
-        id = voucher.getId();
-        voucherName = voucher.getVoucherName();
-        activationCode = voucher.getActivationCode();
-        expirationDate = voucher.getExpirationDate();
-
-        VoucherResponse voucherResponse = new VoucherResponse(id, voucherName, activationCode, expirationDate);
-
-        return voucherResponse;
+        return new VoucherResponse(id, voucherName, activationCode, expirationDate);
     }
 
-    protected WinnerResponse winnerToWinnerResponse(Winner winner) {
+    private WinnerResponse winnerToWinnerResponse(Winner winner) {
         if (winner == null) {
             return null;
         }
 
-        ParticipantResponse participant = null;
-        VoucherResponse voucher = null;
+        ParticipantResponse participant = participantToParticipantResponse(winner.getParticipant());
+        VoucherResponse voucher = voucherToVoucherResponse(winner.getVoucher());
 
-        participant = participantToParticipantResponse(winner.getParticipant());
-        voucher = voucherToVoucherResponse(winner.getVoucher());
-
-        WinnerResponse winnerResponse = new WinnerResponse(participant, voucher);
-
-        return winnerResponse;
+        return new WinnerResponse(participant, voucher);
     }
 
-    protected List<WinnerResponse> winnerListToWinnerResponseList(List<Winner> list) {
+    private List<WinnerResponse> winnerListToWinnerResponseList(List<Winner> list) {
         if (list == null) {
-            return null;
+            return Collections.emptyList();
         }
 
-        List<WinnerResponse> list1 = new ArrayList<WinnerResponse>(list.size());
+        List<WinnerResponse> list1 = new ArrayList<>(list.size());
         for (Winner winner : list) {
             list1.add(winnerToWinnerResponse(winner));
         }
@@ -144,11 +120,11 @@ public class LotteryMapper {
         return list1;
     }
 
-    protected void setNotActiveStatus(Lottery lottery) {
+    private void setNotActiveStatus(Lottery lottery) {
         lottery.setStatus(Status.NOT_ACTIVE);
     }
 
-    protected void setVoucherListToNull(Lottery lottery) {
+    private void setVoucherListToNull(Lottery lottery) {
         lottery.setVouchers(null);
     }
 }

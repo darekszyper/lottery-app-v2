@@ -13,7 +13,6 @@ import java.util.UUID;
 @SpringBootTest
 class EmailSendingIntegrationTests {
 
-    @Autowired
     private ApplicationEventPublisher eventPublisher;
 
     @Test
