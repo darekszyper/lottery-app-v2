@@ -1,5 +1,6 @@
 package com.szyperek.lottery.mapper;
 
+import com.szyperek.lottery.dto.request.AppUserRequest;
 import com.szyperek.lottery.dto.request.VoucherRequest;
 import com.szyperek.lottery.dto.response.VoucherResponse;
 import com.szyperek.lottery.entity.AppUser;
@@ -14,30 +15,30 @@ import java.time.LocalDate;
 public class MapperTestUtils {
 
     @NotNull
-    static Voucher getVoucher() {
+    static Voucher getBasicVoucher() {
         Voucher voucher = new Voucher();
         voucher.setId(1L);
         voucher.setVoucherName("voucher");
         voucher.setActivationCode("12345");
         voucher.setExpirationDate(LocalDate.of(2100, 1, 1));
-        voucher.setAppUser(getAppSuperUser());
+        voucher.setAppUser(getBasicAppSuperUser());
         return voucher;
     }
 
     @NotNull
-    private static Lottery getNotActiveLottery() {
+    private static Lottery getBasicNotActiveLottery() {
         Lottery lottery = new Lottery();
         lottery.setId(1L);
         lottery.setEventName("lottery");
         lottery.setCity("warsaw");
         lottery.setLotteryDate(LocalDate.of(2100, 1, 1));
         lottery.setStatus(Status.NOT_ACTIVE);
-        lottery.setAppUser(getAppSuperUser());
+        lottery.setAppUser(getBasicAppSuperUser());
         return lottery;
     }
 
     @NotNull
-    static AppUser getAppSuperUser() {
+    static AppUser getBasicAppSuperUser() {
         AppUser appUser = new AppUser();
         appUser.setId(1L);
         appUser.setEmail("email@gmail.com");
@@ -48,17 +49,36 @@ public class MapperTestUtils {
     }
 
     @NotNull
-    static VoucherRequest getVoucherRequest() {
-        return new VoucherRequest(
-                "voucher",
-                "12345",
-                LocalDate.of(2100, 1, 1),
-                1L
+    static AppUser getBasicAppUser() {
+        AppUser appUser = new AppUser();
+        appUser.setId(1L);
+        appUser.setEmail("email@gmail.com");
+        appUser.setName("name");
+        appUser.setPassword("password");
+        appUser.setRole(Role.USER);
+        return appUser;
+    }
+
+    @NotNull
+    static AppUserRequest getBasicAppUserRequest() {
+        return new AppUserRequest(
+                "email@gmail.com",
+                "name"
         );
     }
 
     @NotNull
-    static VoucherResponse getVoucherResponse() {
+    static VoucherRequest getBasicVoucherRequest() {
+        return new VoucherRequest(
+                1L,
+                "voucher",
+                "12345",
+                LocalDate.of(2100, 1, 1)
+        );
+    }
+
+    @NotNull
+    static VoucherResponse getBasicVoucherResponse() {
         return new VoucherResponse(
                 1L,
                 "voucher",

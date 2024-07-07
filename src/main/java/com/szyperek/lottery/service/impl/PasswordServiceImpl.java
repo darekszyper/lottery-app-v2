@@ -5,6 +5,7 @@ import com.szyperek.lottery.entity.PasswordResetToken;
 import com.szyperek.lottery.exception.InvalidTokenException;
 import com.szyperek.lottery.repository.PasswordTokenRepo;
 import com.szyperek.lottery.service.AppUserService;
+import com.szyperek.lottery.service.PasswordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class PasswordServiceImpl {
+public class PasswordServiceImpl implements PasswordService {
     public static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static final String LOWER = "abcdefghijklmnopqrstuvwxyz";
     public static final String DIGITS = "0123456789";
@@ -25,6 +26,7 @@ public class PasswordServiceImpl {
     private final PasswordEncoder passwordEncoder;
     private final AppUserService appUserService;
 
+    @Override
     public String generatePassword() {
         SecureRandom random = new SecureRandom();
         StringBuilder password = new StringBuilder();
@@ -55,6 +57,7 @@ public class PasswordServiceImpl {
     }
 
     @Transactional
+    @Override
     public void createPasswordResetTokenForUser(AppUser appUser, String token) {
         Optional<PasswordResetToken> oldToken = passwordTokenRepo.findByUser(appUser);
         oldToken.ifPresent(passwordTokenRepo::delete);
@@ -67,6 +70,7 @@ public class PasswordServiceImpl {
         passwordTokenRepo.save(myToken);
     }
 
+    @Override
     public void validatePasswordResetToken(String token) {
         final PasswordResetToken passToken = passwordTokenRepo.findByToken(token);
 
@@ -84,6 +88,7 @@ public class PasswordServiceImpl {
         return passToken.getExpiryDate().isBefore(now);
     }
 
+    @Override
     public void changeUserPassword(AppUser appUser, String newPassword) {
         appUser.setPassword(passwordEncoder.encode(newPassword));
         appUserService.registerAccount(appUser);

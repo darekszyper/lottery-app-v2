@@ -18,6 +18,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class VoucherRequest {
 
+    private Long userId;
+
     @NotBlank(message = "Voucher name required")
     @Size(max = 50, message = "Voucher name must be shorter than 50 letters")
     private String voucherName;
@@ -30,6 +32,4 @@ public class VoucherRequest {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Future(message = "Expiration date must be in the future")
     private LocalDate expirationDate;
-
-    private Long userId;
 }

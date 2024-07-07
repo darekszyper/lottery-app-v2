@@ -31,24 +31,15 @@ public class VoucherMapper {
             return null;
         }
 
-        Long id = null;
-        String voucherName = null;
-        String activationCode = null;
-        LocalDate expirationDate = null;
-
-        id = voucher.getId();
-        voucherName = voucher.getVoucherName();
-        activationCode = voucher.getActivationCode();
-        expirationDate = voucher.getExpirationDate();
+        Long id = voucher.getId();
+        String voucherName = voucher.getVoucherName();
+        String activationCode = voucher.getActivationCode();
+        LocalDate expirationDate = voucher.getExpirationDate();
 
         return new VoucherResponse(id, voucherName, activationCode, expirationDate);
     }
 
-    protected AppUser voucherRequestToAppUser(VoucherRequest voucherRequest) {
-        if (voucherRequest == null) {
-            return null;
-        }
-
+    private AppUser voucherRequestToAppUser(VoucherRequest voucherRequest) {
         AppUser appUser = new AppUser();
 
         appUser.setId(voucherRequest.getUserId());
