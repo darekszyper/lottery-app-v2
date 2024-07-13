@@ -1,4 +1,4 @@
-# JUGLottery Application
+# JUGLottery-V2 Application
 
 Lottery-app is a web application that enables you to create lotteries that are integrated with the **Random.org API**. This API provides **true randomness that comes from atmospheric noise**, ensuring that the lottery results are fair and unbiased. The application has implemented Spring Security 6.1 with role-based authentication, which means that a superuser can create and manage accounts of users who can create lotteries. The application has also configured JavaMailSender, which is used to reset passwords and inform users about their wins. The frontend of the application is created using Thymeleaf, a server-side Java template engine that allows for easy development of dynamic web applications.
 
