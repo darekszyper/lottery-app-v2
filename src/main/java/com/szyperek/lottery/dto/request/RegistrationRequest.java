@@ -10,7 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AppUserRequest {
+@Builder
+public class RegistrationRequest {
 
     @NotBlank(message = "Email required")
     @Email(message = "Email must be in correct format")

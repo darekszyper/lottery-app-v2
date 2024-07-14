@@ -1,6 +1,6 @@
 package com.szyperek.lottery.mapper;
 
-import com.szyperek.lottery.dto.request.AppUserRequest;
+import com.szyperek.lottery.dto.request.RegistrationRequest;
 import com.szyperek.lottery.dto.response.AppUserResponse;
 import com.szyperek.lottery.entity.AppUser;
 import com.szyperek.lottery.service.PasswordService;
@@ -63,13 +63,13 @@ class AppUserMapperTest {
     @DisplayName("Should map AppUserRequest to AppUser with generated password")
     void shouldMapAppUserRequestToAppUser() {
         // given
-        AppUserRequest appUserRequest = getBasicAppUserRequest();
+        RegistrationRequest registrationRequest = getBasicAppUserRequest();
         AppUser expectedResult = getBasicAppUser();
 
         // when
         when(passwordService.generatePassword()).thenReturn("password");
         when(passwordEncoder.encode("password")).thenReturn("encodedPassword");
-        AppUser result = appUserMapper.toEntity(appUserRequest);
+        AppUser result = appUserMapper.toEntity(registrationRequest);
 
         // then
         assertEquals(expectedResult.getEmail(), result.getEmail());

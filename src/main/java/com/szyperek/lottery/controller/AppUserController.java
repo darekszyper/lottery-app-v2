@@ -1,6 +1,6 @@
 package com.szyperek.lottery.controller;
 
-import com.szyperek.lottery.dto.request.AppUserRequest;
+import com.szyperek.lottery.dto.request.RegistrationRequest;
 import com.szyperek.lottery.dto.response.AppUserResponse;
 import com.szyperek.lottery.entity.AppUser;
 import com.szyperek.lottery.exception.UniqueUserEmailException;
@@ -39,16 +39,16 @@ public class AppUserController {
 
     @GetMapping("/create")
     public String showCreateNewAccount(Model model) {
-        model.addAttribute("user", new AppUserRequest());
+        model.addAttribute("user", new RegistrationRequest());
         return "create_account";
     }
 
     @PostMapping("/create")
-    public String createAccount(@ModelAttribute("user") @Valid AppUserRequest appUserRequest,
+    public String createAccount(@ModelAttribute("user") @Valid RegistrationRequest registrationRequest,
                                 BindingResult bindingResult,
                                 Model model,
                                 HttpServletRequest request) {
-        AppUser appUser = appUserMapper.toEntity(appUserRequest);
+        AppUser appUser = appUserMapper.toEntity(registrationRequest);
         if (bindingResult.hasErrors()) {
             log.error("Validation error: {}", bindingResult.getAllErrors());
             return "error/account_validation_error";

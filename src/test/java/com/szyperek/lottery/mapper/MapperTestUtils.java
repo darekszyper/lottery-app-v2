@@ -1,6 +1,6 @@
 package com.szyperek.lottery.mapper;
 
-import com.szyperek.lottery.dto.request.AppUserRequest;
+import com.szyperek.lottery.dto.request.RegistrationRequest;
 import com.szyperek.lottery.dto.request.LotteryRequest;
 import com.szyperek.lottery.dto.request.ParticipantRequest;
 import com.szyperek.lottery.dto.request.VoucherRequest;
@@ -101,8 +101,8 @@ public class MapperTestUtils {
     }
 
     @NotNull
-    static AppUserRequest getBasicAppUserRequest() {
-        return new AppUserRequest(
+    static RegistrationRequest getBasicAppUserRequest() {
+        return new RegistrationRequest(
                 "email@gmail.com",
                 "name"
         );
